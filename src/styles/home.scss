@@ -1,0 +1,36 @@
+.home {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  height: 100%;
+  position: relative;
+}
+
+.searchBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  height: 50px;
+  width: 80%;
+  margin: auto;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 80px;
+  box-shadow: 0px 3px 10px #86a9c1;
+}
+
+.map {
+  background: #ACC9DD;
+}
+
+.nav {
+  background: #4d6473;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  left: 20px;
+  top: 20px;
+}
