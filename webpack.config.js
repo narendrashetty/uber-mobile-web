@@ -7,7 +7,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const sassLoaders = [
   'css',
   'postcss-loader',
-  'sass?includePaths[]=' + (path.resolve(__dirname, './node_modules'))
+  'sass'
 ];
 
 module.exports = {
@@ -24,10 +24,10 @@ module.exports = {
       'loader': 'react-hot!babel'
     }, {
       'test': /\.css$/,
-      'loader': 'style!css!postcss'
+      'loader': ExtractTextPlugin.extract('style', 'css?modules!postcss!sass')
     }, {
-      'test': /\.scss$/,
-      'loader': ExtractTextPlugin.extract('style', sassLoaders.join('!'))
+      'test': /(\.scss)$/,
+      'loader': ExtractTextPlugin.extract('style', 'css!postcss!sass?modules')
     }]
   },
   'resolve': {

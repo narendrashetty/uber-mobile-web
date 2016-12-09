@@ -5,7 +5,8 @@ import App from './containers/App';
 export default function() {
   return (
     <Router history={ hashHistory }>
-      <Route path="/" component={App} />
+      <Route path="/" component={App}>
+      </Route>
     </Router>
   );
 }
