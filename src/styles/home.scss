@@ -35,6 +35,75 @@
   top: 20px;
 }
 
-aside.ubDrawer {
+.ubDrawer {
   width: 70vw !important;
+  display: flex !important;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  border-right: 0px !important;
+  > div {
+    width: 100%;
+  }
+
+  &__header {
+    height: 25vh;
+    background: #000;
+    padding: 35px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  &__body {
+    flex-grow: 1;
+    padding: 0 20px;
+  }
+
+  &__footer {
+    height: 50px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    font-weight: 100;
+    > span {
+      &:first-child {
+        color: #000;
+      }
+
+      &:last-child {
+        color: #ccc;
+      }
+    }
+  }
+
+  &__name {
+
+  }
+
+  &__dp {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #ccc;
+  }
+
+  &__name {
+    color: #fff;
+  }
+
+  &__menu {
+    list-style-type: none;
+    padding: 0;
+    color: #3c3c3c;
+    font-weight: 100;
+    margin-top: 30px;
+    font-size: 16px;
+
+    li {
+      margin-bottom: 20px;
+    }
+  }
 }

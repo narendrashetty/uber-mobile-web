@@ -22,9 +22,9 @@ export const App = React.createClass({
   },
 
   render() {
-    if (this.state.isSplash) {
-      return <Splash />;
-    }
+    // if (this.state.isSplash) {
+    //   return <Splash />;
+    // }
     return <Home />;
   }
 });
