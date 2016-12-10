@@ -2,25 +2,43 @@ import React from 'react';
 import Drawer from 'react-toolbox/lib/drawer';
 import classNames from 'classnames';
 import { hashHistory } from 'react-router';
+import MapGL from 'react-map-gl';
+import Dimensions from 'react-dimensions';
 
-export const Splash = React.createClass({
-
-  componentDidMount() {
-    // if (navigator.geolocation) {
-    //   navigator.geolocation.getCurrentPosition((pos) => {
-        
-    //   });
-    // }
-  },
+export const Home = React.createClass({
 
   getInitialState() {
     return {
-      'active': false
+      'active': false,
+      'latitude': 37.7577,
+      'longitude': -122.4376
     };
   },
 
+  componentDidMount() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((pos) => {
+        this.setState({
+          'latitude': pos.coords.latitude,
+          'longitude': pos.coords.longitude
+        });
+      });
+    }
+    this.setup(this.props);
+  },
+
+  componentWillReceiveProps(nextProps) {
+    this.setup(nextProps);
+  },
+
+  setup(props) {
+    this.setState({
+      'isSearch': props.location.pathname === '/search'
+    });
+  },
+
   handleToggle() {
-    if (this.props.isSearch) {
+    if (this.state.isSearch) {
       hashHistory.goBack();
     } else {
       this.setState({active: !this.state.active});
@@ -28,7 +46,7 @@ export const Splash = React.createClass({
   },
 
   gotoSearch() {
-    if (!this.props.isSearch) {
+    if (!this.state.isSearch) {
       hashHistory.push('/search');
     }
   },
@@ -64,11 +82,11 @@ export const Splash = React.createClass({
   renderSearchbox() {
     return (
       <div className={classNames('searchBox', {
-        'searchBox__expand': this.props.isSearch
+        'searchBox__expand': this.state.isSearch
       })}>
 
         {(() => {
-          if (this.props.isSearch) {
+          if (this.state.isSearch) {
             return (
               <div className="searchBox__source">
                 <div className="searchBox__source__legend"></div>
@@ -95,15 +113,43 @@ export const Splash = React.createClass({
     );
   },
 
+  renderSearchResult() {
+    if (this.state.isSearch) {
+      return (
+        <div className="fullHeight fullWidth searchResult">
+
+        </div>
+      );
+    }
+  },
+
   render() {
+
     return (
       <div className="fullHeight">
-        <div className='fullWidth fullHeight map'></div>
+        <div className='fullWidth fullHeight map'>
+          <MapGL
+            width={this.props.containerWidth}
+            height={this.props.containerHeight}
+            latitude={this.state.latitude}
+            longitude={this.state.longitude}
+            zoom={12.011557070552028}
+            startDragLngLat={null}
+            mapStyle="mapbox://styles/mapbox/streets-v9"
+            isDragging={true}
+            mapboxApiAccessToken="pk.eyJ1IjoibmFyZW5kcmFzaGV0dHkiLCJhIjoiY2l3am9veHJ2MDAwbDJ0cjI1NTkyM3llNSJ9.l2l38Z5jAyCO0_aOE-ABlA"
+            onChangeViewport={viewport => {
+              const {latitude, longitude, zoom} = viewport;
+            }}
+          />
+        </div>
+        {this.renderSearchResult()}
         {this.renderSearchbox()}
         {this.renderMenu()}
+
       </div>
     );
   }
 });
 
-export default Splash;
+export default Dimensions()(Home);

@@ -25,11 +25,7 @@ export const App = React.createClass({
     // if (this.state.isSplash) {
     //   return <Splash />;
     // }
-    return (
-      <Home
-        isSearch={this.props.location.pathname === '/search'}
-      />
-    );
+    return this.props.children;
   }
 });
 

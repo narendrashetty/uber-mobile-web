@@ -28,10 +28,17 @@ module.exports = {
     }, {
       'test': /(\.scss)$/,
       'loader': ExtractTextPlugin.extract('style', 'css!postcss!sass?modules')
+    }, {
+      'test': /(\.json)$/,
+      'loader': 'json-loader'
     }]
   },
   'resolve': {
-    'extensions': ['', '.js', '.sass']
+    'extensions': ['', '.js', '.sass'],
+    'alias': {
+      'mapbox-gl/js/geo/transform': path.join(__dirname, "/node_modules/mapbox-gl/js/geo/transform"),
+      'mapbox-gl': path.join(__dirname, "/node_modules/mapbox-gl/dist/mapbox-gl.js")
+    }
   },
   'output': {
     'path': __dirname + '/dist',
@@ -63,5 +70,8 @@ module.exports = {
         'Safari >= 6'
       ]
     })];
+  },
+  'node': {
+    'fs': 'empty'
   }
 };

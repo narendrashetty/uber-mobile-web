@@ -52,6 +52,7 @@
     padding: 0 20px 10px;
     flex-direction: column;
     justify-content: flex-end;
+    box-shadow: 0px 3px 10px #d8d8d8;
 
     .searchBox {
 
@@ -99,4 +100,10 @@
 
     }
   }
+}
+
+.searchResult {
+  position: absolute;
+  top: 0;
+  background: #fff;
 }
