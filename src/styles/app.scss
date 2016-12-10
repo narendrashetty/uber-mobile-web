@@ -6,7 +6,7 @@ html, body {
   height: 100%;
 }
 
-div {
+div, input {
   box-sizing: border-box;
   &:focus {
     outline: none;
@@ -28,3 +28,5 @@ div {
 
 @import 'splash';
 @import 'home';
+@import 'searchbox';
+@import 'nav';

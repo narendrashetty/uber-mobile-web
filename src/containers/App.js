@@ -14,18 +14,22 @@ export const App = React.createClass({
   },
 
   componentDidMount() {
-    setTimeout(() => {
-      this.setState({
-        'isSplash': false
-      });
-    }, 2000);
+    // setTimeout(() => {
+    //   this.setState({
+    //     'isSplash': false
+    //   });
+    // }, 2000);
   },
 
   render() {
     // if (this.state.isSplash) {
     //   return <Splash />;
     // }
-    return <Home />;
+    return (
+      <Home
+        isSearch={this.props.location.pathname === '/search'}
+      />
+    );
   }
 });
 
