@@ -16,7 +16,7 @@ export const Map = React.createClass({
 
   getInitialState() {
     return {
-      'active': false,
+      'isLoading': true,
       'viewport': {
         'width': this.props.containerWidth,
         'height': this.props.containerHeight,
@@ -41,7 +41,8 @@ export const Map = React.createClass({
         });
         this.setState({
           viewport,
-          'locations': [pos.coords.longitude, pos.coords.latitude]
+          'locations': [pos.coords.longitude, pos.coords.latitude],
+          'isLoading': false
         });
       });
     }
@@ -80,18 +81,38 @@ export const Map = React.createClass({
     );
   },
 
+  renderLoading() {
+    return (
+      <div className="fullHeight map__loading">
+        Loading
+      </div>
+    );
+  },
+
+  renderMap() {
+    return (
+      <MapGL
+        {...this.state.viewport}
+        onChangeViewport={(newViewport) => {
+          const viewport = Object.assign({}, this.state.viewport, newViewport);
+          this.setState({viewport});
+        }}
+      >
+        {this.renderOverlay()}
+      </MapGL>
+    );
+  },
+
   render() {
     return (
       <div className='fullWidth fullHeight map'>
-        <MapGL
-          {...this.state.viewport}
-          onChangeViewport={(newViewport) => {
-            const viewport = Object.assign({}, this.state.viewport, newViewport);
-            this.setState({viewport});
-          }}
-        >
-          {this.renderOverlay()}
-        </MapGL>
+        {(() => {
+          if (this.state.isLoading) {
+            return this.renderLoading();
+          } else {
+            return this.renderMap();
+          }
+        })()}        
       </div>
     );
   }

@@ -9,6 +9,11 @@
 
 .map {
   background: #ACC9DD;
+  &__loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 .marker {
