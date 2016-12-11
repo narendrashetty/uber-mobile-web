@@ -36,13 +36,13 @@
     transform-origin: center;
     border: 2px solid #40A0C8;
     animation-name: ping;
-    animation-duration: 3s;
+    animation-duration: 2s;
     animation-iteration-count: infinite;
     box-shadow: 0px 0px 3px #ccc;
   }
 }
 
-@-webkit-keyframes ping {
+@keyframes ping {
   from {
     transform: scale(.25);
     opacity: 1;

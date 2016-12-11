@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { hashHistory } from 'react-router';
 import MapGL from 'react-map-gl';
 import HTMLOverlay from 'react-map-gl/dist/overlays/html.react.js';
+import SVGOverlay from 'react-map-gl/dist/overlays/svg.react.js';
 import Dimensions from 'react-dimensions';
 import ViewportMercator from 'viewport-mercator-project';
 
@@ -28,7 +29,8 @@ export const Map = React.createClass({
         'startDragLngLat': null,
         'isDragging': null
       },
-      'locations': [-122.4376, 37.7577]
+      'sourceLocation': [-122.4376, 37.7577],
+      'destinationLocation': [4.898454, 52.365503]
     };
   },
 
@@ -41,11 +43,57 @@ export const Map = React.createClass({
         });
         this.setState({
           viewport,
-          'locations': [pos.coords.longitude, pos.coords.latitude],
+          'sourceLocation': [pos.coords.longitude, pos.coords.latitude],
           'isLoading': false
         });
       });
     }
+  },
+
+  renderPath(sourceProject, destinationProject) {
+    // let left, top, width;
+    // if (sourceProject[0] < destinationProject[0]) {
+    //   left = sourceProject[0];
+    //   top = sourceProject[1];
+    //   width = destinationProject[0] - sourceProject[0];
+    // } else {
+    //   left = destinationProject[0];
+    //   top = destinationProject[1];
+    //   width = sourceProject[0] - destinationProject[0];
+    // }
+    // return (
+    //   <div className="path" style={{
+    //     'position': 'absolute',
+    //     'height': 10,
+    //     'background': '#000',
+    //     left,
+    //     top,
+    //     width
+    //   }}></div>
+    // );
+  },
+
+  redraw(config) {
+    const sourceProject = config.project(this.state.sourceLocation);
+    const destinationProject = config.project(this.state.destinationLocation);
+    return (
+      <div>
+        {this.renderPath(sourceProject, destinationProject)}
+
+        <div className="marker" style={{
+          'top': sourceProject[1],
+          'left': sourceProject[0]
+        }}>
+          <div className="ring"></div>
+        </div>
+
+        <div className="marker" style={{
+          'top': destinationProject[1],
+          'left': destinationProject[0]
+        }}>
+        </div>
+      </div>
+    );
   },
 
   renderOverlay() {
@@ -54,18 +102,8 @@ export const Map = React.createClass({
         width={this.state.viewport.width}
         height={this.state.viewport.height}
         isDragging={false}
-        redraw={(config) => {
-          const project = config.project(config.isDragging);
-          return (
-            <div className="marker" style={{
-              'top': project[1],
-              'left': project[0]
-            }}>
-              <div className="ring"></div>
-            </div>
-          );
-        }}
-        project={() => {
+        redraw={this.redraw}
+        project={(location) => {
           let viewport = this.state.viewport;
           const mercator = ViewportMercator({
             longitude: viewport.longitude,
@@ -75,7 +113,7 @@ export const Map = React.createClass({
             height: viewport.height
           });
 
-          const pixel = mercator.project(this.state.locations);
+          const pixel = mercator.project(location);
           return [round(pixel[0], 1), round(pixel[1], 1)];
         }} />
     );
@@ -99,6 +137,7 @@ export const Map = React.createClass({
         }}
       >
         {this.renderOverlay()}
+
       </MapGL>
     );
   },
@@ -117,5 +156,24 @@ export const Map = React.createClass({
     );
   }
 });
+
+        // <SVGOverlay
+        //   width={this.state.viewport.width}
+        //   height={this.state.viewport.height}
+        //   latitude={this.state.viewport.latitude}
+        //   longitude={this.state.viewport.longitude}
+        //   zoom={this.state.viewport.zoom}
+        //   isDragging={false}
+        //   redraw={(config) => {
+        //     const sourcePixel = config.project(this.state.sourceLocation);
+        //     const destinationPixel = config.project(this.state.destinationLocation);
+
+        //     const d = `M ${sourcePixel[0] + 5} ${sourcePixel[1] + 5} Q ${Math.abs((sourcePixel[0] - destinationPixel[0]) / 2)} ${destinationPixel[1] - 100} ${destinationPixel[0] + 5} ${destinationPixel[1] + 5}`;
+
+        //     return (
+        //       <path id="arc1" fill="none" stroke="#446688" strokeWidth="2" d="M 50 150 A 100 100 0 1 0 150 50"></path>
+        //     );
+        //   }}
+        // />
 
 export default Dimensions()(Map);
