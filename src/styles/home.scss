@@ -10,3 +10,40 @@
 .map {
   background: #ACC9DD;
 }
+
+.marker {
+  display: block;
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #40A0C8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .ring {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    padding: 20px;
+    transform: scale(.25);
+    transform-origin: center;
+    border: 2px solid #40A0C8;
+    animation-name: ping;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    box-shadow: 0px 0px 3px #ccc;
+  }
+}
+
+@-webkit-keyframes ping {
+  from {
+    transform: scale(.25);
+    opacity: 1;
+  }
+  to {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
