@@ -51,26 +51,7 @@ export const Map = React.createClass({
   },
 
   renderPath(sourceProject, destinationProject) {
-    // let left, top, width;
-    // if (sourceProject[0] < destinationProject[0]) {
-    //   left = sourceProject[0];
-    //   top = sourceProject[1];
-    //   width = destinationProject[0] - sourceProject[0];
-    // } else {
-    //   left = destinationProject[0];
-    //   top = destinationProject[1];
-    //   width = sourceProject[0] - destinationProject[0];
-    // }
-    // return (
-    //   <div className="path" style={{
-    //     'position': 'absolute',
-    //     'height': 10,
-    //     'background': '#000',
-    //     left,
-    //     top,
-    //     width
-    //   }}></div>
-    // );
+    
   },
 
   redraw(config) {
@@ -98,24 +79,59 @@ export const Map = React.createClass({
 
   renderOverlay() {
     return (
-      <HTMLOverlay
-        width={this.state.viewport.width}
-        height={this.state.viewport.height}
-        isDragging={false}
-        redraw={this.redraw}
-        project={(location) => {
-          let viewport = this.state.viewport;
-          const mercator = ViewportMercator({
-            longitude: viewport.longitude,
-            latitude: viewport.latitude,
-            zoom: viewport.zoom,
-            width: viewport.width,
-            height: viewport.height
-          });
+      <div>
+        <HTMLOverlay
+          width={this.state.viewport.width}
+          height={this.state.viewport.height}
+          isDragging={false}
+          redraw={this.redraw}
+          project={(location) => {
+            let viewport = this.state.viewport;
+            const mercator = ViewportMercator({
+              longitude: viewport.longitude,
+              latitude: viewport.latitude,
+              zoom: viewport.zoom,
+              width: viewport.width,
+              height: viewport.height
+            });
 
-          const pixel = mercator.project(location);
-          return [round(pixel[0], 1), round(pixel[1], 1)];
-        }} />
+            const pixel = mercator.project(location);
+            return [round(pixel[0], 1), round(pixel[1], 1)];
+          }} />
+          <SVGOverlay
+            width={this.state.viewport.width}
+            height={this.state.viewport.height}
+            latitude={this.state.viewport.latitude}
+            longitude={this.state.viewport.longitude}
+            zoom={this.state.viewport.zoom}
+            isDragging={false}
+            redraw={(config) => {
+              const sourcePixel = config.project(this.state.sourceLocation);
+              const destinationPixel = config.project(this.state.destinationLocation);
+
+              let diff = Math.abs(sourcePixel[0] - destinationPixel[0]) / 2;
+              let center = destinationPixel[0] + diff;
+
+              if (sourcePixel[0] < destinationPixel[0]) {
+                center = sourcePixel[0] + diff;
+              }
+
+              let altitude = destinationPixel[1] - (this.state.viewport.zoom * 2);
+
+              let d = `M ${sourcePixel[0] + 5} ${sourcePixel[1] + 5} Q ${center} ${altitude} ${destinationPixel[0] + 5} ${destinationPixel[1] + 5}`;
+              return (
+                <path
+                  id="arc1"
+                  fill="none"
+                  stroke="#446688"
+                  strokeWidth="2"
+                  d={d}
+                >
+                </path>
+              );
+            }}
+          />
+        </div>
     );
   },
 
@@ -156,24 +172,5 @@ export const Map = React.createClass({
     );
   }
 });
-
-        // <SVGOverlay
-        //   width={this.state.viewport.width}
-        //   height={this.state.viewport.height}
-        //   latitude={this.state.viewport.latitude}
-        //   longitude={this.state.viewport.longitude}
-        //   zoom={this.state.viewport.zoom}
-        //   isDragging={false}
-        //   redraw={(config) => {
-        //     const sourcePixel = config.project(this.state.sourceLocation);
-        //     const destinationPixel = config.project(this.state.destinationLocation);
-
-        //     const d = `M ${sourcePixel[0] + 5} ${sourcePixel[1] + 5} Q ${Math.abs((sourcePixel[0] - destinationPixel[0]) / 2)} ${destinationPixel[1] - 100} ${destinationPixel[0] + 5} ${destinationPixel[1] + 5}`;
-
-        //     return (
-        //       <path id="arc1" fill="none" stroke="#446688" strokeWidth="2" d="M 50 150 A 100 100 0 1 0 150 50"></path>
-        //     );
-        //   }}
-        // />
 
 export default Dimensions()(Map);
