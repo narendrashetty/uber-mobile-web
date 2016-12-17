@@ -8,6 +8,7 @@ import Dimensions from 'react-dimensions';
 import Immutable from 'immutable';
 import ViewportMercator from 'viewport-mercator-project';
 import Map from './Map';
+import Geosuggest from 'react-geosuggest';
 
 function round(x, n) {
   const tenN = Math.pow(10, n);
@@ -18,7 +19,8 @@ export const Home = React.createClass({
 
   getInitialState() {
     return {
-      'active': false
+      'active': false,
+      'destinationLocation': null
     };
   },
 
@@ -48,6 +50,13 @@ export const Home = React.createClass({
     if (!this.state.isSearch) {
       hashHistory.push('/search');
     }
+  },
+
+  onSuggestSelect(destination) {
+    this.setState({
+      'destinationLocation': [destination.location.lng, destination.location.lat]
+    });
+    hashHistory.push('/');
   },
 
   renderMenu() {
@@ -101,32 +110,25 @@ export const Home = React.createClass({
 
         <div className="searchBox__destination">
           <div className="searchBox__destination__legend"></div>
-          <input
-            type="text"
+          <Geosuggest
+            location={new google.maps.LatLng(53.558572, 9.9278215)}
+            radius="20"
+            onClick={this.gotoSearch}
             placeholder="Where to?"
-            className="searchBox__destination__input"
-            onClick={ this.gotoSearch }
+            inputClassName="searchBox__destination__input"
+            onSuggestSelect={this.onSuggestSelect}
           />
         </div>
       </div>
     );
   },
 
-  renderSearchResult() {
-    if (this.state.isSearch) {
-      return (
-        <div className="fullHeight fullWidth searchResult">
-
-        </div>
-      );
-    }
-  },
-
   render() {
     return (
       <div className="fullHeight">
-        <Map />
-        {this.renderSearchResult()}
+        <Map 
+          destinationLocation={this.state.destinationLocation}
+        />
         {this.renderSearchbox()}
         {this.renderMenu()}
       </div>

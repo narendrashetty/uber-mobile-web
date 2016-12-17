@@ -29,8 +29,7 @@ export const Map = React.createClass({
         'startDragLngLat': null,
         'isDragging': null
       },
-      'sourceLocation': [-122.4376, 37.7577],
-      'destinationLocation': [4.898454, 52.365503]
+      'sourceLocation': [-122.4376, 37.7577]
     };
   },
 
@@ -50,17 +49,36 @@ export const Map = React.createClass({
     }
   },
 
-  renderPath(sourceProject, destinationProject) {
-    
+  renderPath(config) {
+    const sourcePixel = config.project(this.state.sourceLocation);
+    const destinationPixel = config.project(this.props.destinationLocation);
+
+    let diff = Math.abs(sourcePixel[0] - destinationPixel[0]) / 2;
+    let center = destinationPixel[0] + diff;
+
+    if (sourcePixel[0] < destinationPixel[0]) {
+      center = sourcePixel[0] + diff;
+    }
+
+    let altitude = destinationPixel[1] - (this.state.viewport.zoom * 2);
+
+    let d = `M ${sourcePixel[0] + 5} ${sourcePixel[1] + 5} Q ${center} ${altitude} ${destinationPixel[0] + 5} ${destinationPixel[1] + 5}`;
+    return (
+      <path
+        id="arc1"
+        fill="none"
+        stroke="#446688"
+        strokeWidth="2"
+        d={d}
+      >
+      </path>
+    );
   },
 
-  redraw(config) {
+  renderDots(config) {
     const sourceProject = config.project(this.state.sourceLocation);
-    const destinationProject = config.project(this.state.destinationLocation);
     return (
       <div>
-        {this.renderPath(sourceProject, destinationProject)}
-
         <div className="marker" style={{
           'top': sourceProject[1],
           'left': sourceProject[0]
@@ -68,11 +86,18 @@ export const Map = React.createClass({
           <div className="ring"></div>
         </div>
 
-        <div className="marker" style={{
-          'top': destinationProject[1],
-          'left': destinationProject[0]
-        }}>
-        </div>
+        {(() => {
+          if (this.props.destinationLocation) {
+            const destinationProject = config.project(this.props.destinationLocation);
+            return (
+              <div className="marker" style={{
+                'top': destinationProject[1],
+                'left': destinationProject[0]
+              }}>
+              </div>
+            );
+          }
+        })()}
       </div>
     );
   },
@@ -84,7 +109,7 @@ export const Map = React.createClass({
           width={this.state.viewport.width}
           height={this.state.viewport.height}
           isDragging={false}
-          redraw={this.redraw}
+          redraw={this.renderDots}
           project={(location) => {
             let viewport = this.state.viewport;
             const mercator = ViewportMercator({
@@ -98,39 +123,22 @@ export const Map = React.createClass({
             const pixel = mercator.project(location);
             return [round(pixel[0], 1), round(pixel[1], 1)];
           }} />
-          <SVGOverlay
-            width={this.state.viewport.width}
-            height={this.state.viewport.height}
-            latitude={this.state.viewport.latitude}
-            longitude={this.state.viewport.longitude}
-            zoom={this.state.viewport.zoom}
-            isDragging={false}
-            redraw={(config) => {
-              const sourcePixel = config.project(this.state.sourceLocation);
-              const destinationPixel = config.project(this.state.destinationLocation);
 
-              let diff = Math.abs(sourcePixel[0] - destinationPixel[0]) / 2;
-              let center = destinationPixel[0] + diff;
-
-              if (sourcePixel[0] < destinationPixel[0]) {
-                center = sourcePixel[0] + diff;
-              }
-
-              let altitude = destinationPixel[1] - (this.state.viewport.zoom * 2);
-
-              let d = `M ${sourcePixel[0] + 5} ${sourcePixel[1] + 5} Q ${center} ${altitude} ${destinationPixel[0] + 5} ${destinationPixel[1] + 5}`;
-              return (
-                <path
-                  id="arc1"
-                  fill="none"
-                  stroke="#446688"
-                  strokeWidth="2"
-                  d={d}
-                >
-                </path>
-              );
-            }}
-          />
+          {(() => {
+          if (this.props.destinationLocation) {
+            return (
+              <SVGOverlay
+                width={this.state.viewport.width}
+                height={this.state.viewport.height}
+                latitude={this.state.viewport.latitude}
+                longitude={this.state.viewport.longitude}
+                zoom={this.state.viewport.zoom}
+                isDragging={false}
+                redraw={this.renderPath}
+              />
+            );
+          }
+        })()}
         </div>
     );
   },
