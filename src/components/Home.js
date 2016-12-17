@@ -111,7 +111,7 @@ export const Home = React.createClass({
         <div className="searchBox__destination">
           <div className="searchBox__destination__legend"></div>
           <Geosuggest
-            location={new google.maps.LatLng(53.558572, 9.9278215)}
+            location={new google.maps.LatLng(52.363632, 4.926588)}
             radius="20"
             onClick={this.gotoSearch}
             placeholder="Where to?"

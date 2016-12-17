@@ -139,9 +139,47 @@
     height: 100%;
     background: #fff;
     margin: 0;
+    padding: 0;
+    list-style-type: none;
 
     &--hidden {
       display: none;
     }
   }
+
+  &__item {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #EDEDED;
+    padding-left: 50px;
+    font-size: 12px;
+
+    & > div {
+      div:first-child {
+        font-size: 13px;
+      }
+
+      div:last-child {
+        color: #AFAEB3;
+        margin-top: 4px;
+      }
+    }
+  }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
