@@ -20,13 +20,13 @@ export const Book = React.createClass({
 
             <div className="ride">
               <div className="ride__image"></div>
-              <p className="ride__name">uberPOOL</p>
+              <p className="ride__name">uberGO</p>
               <p className="ride__price">106.75</p>
             </div>
 
             <div className="ride">
               <div className="ride__image"></div>
-              <p className="ride__name">uberPOOL</p>
+              <p className="ride__name">uberX</p>
               <p className="ride__price">106.75</p>
             </div>
           </div>

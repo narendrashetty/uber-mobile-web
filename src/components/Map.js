@@ -142,7 +142,7 @@ export const Map = React.createClass({
             );
           }
         })()}
-        </div>
+      </div>
     );
   },
 
