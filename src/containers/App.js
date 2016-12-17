@@ -14,18 +14,23 @@ export const App = React.createClass({
   },
 
   componentDidMount() {
-    // setTimeout(() => {
-    //   this.setState({
-    //     'isSplash': false
-    //   });
-    // }, 2000);
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((pos) => {
+        this.setState({
+          'sourceLocation': [pos.coords.longitude, pos.coords.latitude],
+          'isSplash': false
+        });
+      });
+    }
   },
 
   render() {
-    // if (this.state.isSplash) {
-    //   return <Splash />;
-    // }
-    return this.props.children;
+    if (this.state.isSplash) {
+      return <Splash />;
+    }
+    return React.cloneElement(this.props.children, {
+      sourceLocation: this.state.sourceLocation
+    });
   }
 });
 

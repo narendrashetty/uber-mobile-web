@@ -23,34 +23,37 @@ export const Map = React.createClass({
         'height': this.props.containerHeight,
         'mapStyle': 'mapbox://styles/mapbox/basic-v9',
         'mapboxApiAccessToken': 'pk.eyJ1IjoibmFyZW5kcmFzaGV0dHkiLCJhIjoiY2l3am9veHJ2MDAwbDJ0cjI1NTkyM3llNSJ9.l2l38Z5jAyCO0_aOE-ABlA',
-        'latitude': 37.7577,
-        'longitude': -122.4376,
+        'latitude': 4.926588,
+        'longitude': 52.363632,
         'zoom': 12.011557070552028,
         'startDragLngLat': null,
         'isDragging': null
       },
-      'sourceLocation': [-122.4376, 37.7577]
+      'sourceLocation': [52.363632, 4.926588]
     };
   },
 
   componentDidMount() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((pos) => {
-        const viewport = Object.assign({}, this.state.viewport, {
-          'latitude': pos.coords.latitude,
-          'longitude': pos.coords.longitude
-        });
-        this.setState({
-          viewport,
-          'sourceLocation': [pos.coords.longitude, pos.coords.latitude],
-          'isLoading': false
-        });
-      });
-    }
+    this.setup(this.props);
+  },
+
+  componentWillReceiveProps(nextProps) {
+    this.setup(nextProps);
+  },
+
+  setup(props) {
+    const viewport = Object.assign({}, this.state.viewport, {
+      'latitude': this.props.sourceLocation[1],
+      'longitude': this.props.sourceLocation[0]
+    });
+    this.setState({
+      viewport,
+      'isLoading': false
+    });
   },
 
   renderPath(config) {
-    const sourcePixel = config.project(this.state.sourceLocation);
+    const sourcePixel = config.project(this.props.sourceLocation);
     const destinationPixel = config.project(this.props.destinationLocation);
 
     let diff = Math.abs(sourcePixel[0] - destinationPixel[0]) / 2;
@@ -76,7 +79,7 @@ export const Map = React.createClass({
   },
 
   renderDots(config) {
-    const sourceProject = config.project(this.state.sourceLocation);
+    const sourceProject = config.project(this.props.sourceLocation);
     return (
       <div>
         <div className="marker" style={{

@@ -1,19 +1,8 @@
 import React from 'react';
 import Drawer from 'react-toolbox/lib/drawer';
-import classNames from 'classnames';
 import { hashHistory } from 'react-router';
-import MapGL from 'react-map-gl';
-import HTMLOverlay from 'react-map-gl/dist/overlays/html.react.js';
-import Dimensions from 'react-dimensions';
-import Immutable from 'immutable';
-import ViewportMercator from 'viewport-mercator-project';
 import Map from './Map';
-import Geosuggest from 'react-geosuggest';
-
-function round(x, n) {
-  const tenN = Math.pow(10, n);
-  return Math.round(x * tenN) / tenN;
-}
+import Search from './Search';
 
 export const Home = React.createClass({
 
@@ -34,13 +23,15 @@ export const Home = React.createClass({
 
   setup(props) {
     this.setState({
-      'isSearch': props.location.pathname === '/search'
+      'isSearch': props.location.pathname === '/search',
+      'isBook': props.location.pathname === '/home/book',
+      'isHome': props.location.pathname === '/home'
     });
   },
 
   handleToggle() {
-    if (this.state.isSearch) {
-      hashHistory.goBack();
+    if (!this.state.isHome) {
+      hashHistory.push('/home');
     } else {
       this.setState({active: !this.state.active});
     }
@@ -56,7 +47,7 @@ export const Home = React.createClass({
     this.setState({
       'destinationLocation': [destination.location.lng, destination.location.lat]
     });
-    hashHistory.push('/');
+    hashHistory.push('/home/book');
   },
 
   renderMenu() {
@@ -87,53 +78,27 @@ export const Home = React.createClass({
     );
   },
 
-  renderSearchbox() {
-    return (
-      <div className={classNames('searchBox', {
-        'searchBox__expand': this.state.isSearch
-      })}>
-
-        {(() => {
-          if (this.state.isSearch) {
-            return (
-              <div className="searchBox__source">
-                <div className="searchBox__source__legend"></div>
-                <input
-                  type="text"
-                  placeholder="Current Location"
-                  className="searchBox__source__input"
-                />
-              </div>
-            );
-          }
-        })()}
-
-        <div className="searchBox__destination">
-          <div className="searchBox__destination__legend"></div>
-          <Geosuggest
-            location={new google.maps.LatLng(52.363632, 4.926588)}
-            radius="20"
-            onClick={this.gotoSearch}
-            placeholder="Where to?"
-            inputClassName="searchBox__destination__input"
-            onSuggestSelect={this.onSuggestSelect}
-          />
-        </div>
-      </div>
-    );
-  },
-
   render() {
     return (
       <div className="fullHeight">
         <Map 
           destinationLocation={this.state.destinationLocation}
+          sourceLocation={this.props.sourceLocation}
         />
-        {this.renderSearchbox()}
+        {(() => {
+          if (!this.state.isBook) {
+            return <Search 
+              onSuggestSelect={this.onSuggestSelect}
+              gotoSearch={this.gotoSearch}
+              isSearch={this.state.isSearch}
+            />;
+          }
+        })()}
+        {this.props.children}
         {this.renderMenu()}
       </div>
     );
   }
 });
 
-export default Dimensions()(Home);
+export default Home;
