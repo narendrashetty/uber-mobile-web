@@ -164,7 +164,6 @@ export const Map = React.createClass({
         }}
       >
         {this.renderOverlay()}
-
       </MapGL>
     );
   },
