@@ -12,11 +12,29 @@ const sassLoaders = [
 
 module.exports = {
   'devtool': 'inline-source-map',
-  'entry': [
-    'webpack-dev-server/client?http://localhost:8080',
-    'webpack/hot/only-dev-server',
-    './src/index.js'
-  ],
+  'entry': {
+    'app': [
+      'webpack-dev-server/client?http://localhost:8080',
+      'webpack/hot/only-dev-server',
+      './src/index.js'
+    ],
+    'vendor1': [
+      'react',
+      'react-redux',
+      'redux',
+      'react-router',
+      'redux-thunk'
+    ],
+    'vendor2': [
+      'react-hammerjs',
+      'react-toolbox/lib/drawer',
+      'react-map-gl',
+      'react-dimensions',
+      'viewport-mercator-project',
+      'classnames',
+      'react-geosuggest'
+    ]
+  },
   'module': {
     'loaders': [{
       'test': /\.js$/,
@@ -46,17 +64,25 @@ module.exports = {
   'output': {
     'path': __dirname + '/dist',
     'publicPath': '/',
-    'filename': 'bundle.js'
+    'filename': '[name].[hash].js'
   },
   'devServer': {
     'contentBase': './dist',
     'hot': true
   },
   'plugins': [
+    new webpack.optimize.CommonsChunkPlugin({
+      name: ['vendor1', 'vendor2'],
+      minChunks: Infinity,
+      filename: '[name].[hash].js',
+    }),
+
     new HtmlWebpackPlugin({
       'template': './index.html',
-      'filename': 'index.html'
+      'filename': 'index.html',
+      'inject': 'body'
     }),
+
     new webpack.HotModuleReplacementPlugin(),
     new ExtractTextPlugin('[name].css')
   ],

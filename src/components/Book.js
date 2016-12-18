@@ -16,8 +16,6 @@ export const Book = React.createClass({
         onSwipe={(event) => {
           const direction = event.direction;
 
-          console.log(direction);
-
           if ([4,1].indexOf(direction) > -1 && this.state.currentState > 0) {
             this.setState({
               'currentState': --this.state.currentState
@@ -66,7 +64,7 @@ export const Book = React.createClass({
               <div className="rideGroup fullHeight fullWidth" data-id="1">
                 <div className="ride">
                   <div className="ride__image"></div>
-                  <p className="ride__name">uberX</p>
+                  <p className="ride__name">uberXL</p>
                   <p className="ride__price">106.75</p>
                 </div>
               </div>

@@ -6,9 +6,25 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   'devtool': 'source-map',
-  'entry': [
-    './src/index.js'
-  ],
+  'entry': {
+    'app': './src/index.js',
+    'vendor1': [
+      'react',
+      'react-redux',
+      'redux',
+      'react-router',
+      'redux-thunk'
+    ],
+    'vendor2': [
+      'react-hammerjs',
+      'react-toolbox/lib/drawer',
+      'react-map-gl',
+      'react-dimensions',
+      'viewport-mercator-project',
+      'classnames',
+      'react-geosuggest'
+    ]
+  },
   'module': {
     'loaders': [{
       'test': /\.js$/,
@@ -38,23 +54,42 @@ module.exports = {
   'output': {
     'path': path.resolve(__dirname, './dist'),
     'publicPath': '/',
-    'filename': 'bundle.js'
+    'filename': '[name].[hash].js'
   },
   'devServer': {
     'contentBase': './dist',
     'hot': true
   },
   'plugins': [
+    new webpack.optimize.CommonsChunkPlugin({
+      name: ['vendor1', 'vendor2'],
+      minChunks: Infinity,
+      filename: '[name].[hash].js',
+    }),
+
     new HtmlWebpackPlugin({
       'template': './index.html',
-      'filename': 'index.html'
+      'filename': 'index.html',
+      'inject': 'body'
     }),
+
     new webpack.optimize.OccurenceOrderPlugin(),
+
+    new webpack.optimize.DedupePlugin(),
+
     new ExtractTextPlugin('[name].css'),
+
     new webpack.optimize.UglifyJsPlugin({
       'compressor': {
+        'screw_ie8': true,
         'warnings': false,
-      }
+        'unused': true,
+        'dead_code': true
+      },
+      'output': {
+        'comments': false
+      },
+      'sourceMap': false
     }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')

@@ -22,6 +22,8 @@
       transform: translate(-50%, -50%);
       top: 50%;
       transition: 0.3s;
+      color: #939393;
+      font-size: 12px;
     }
   }
 
@@ -77,6 +79,10 @@
           $left: #{50 * ($j - $i + 1)};
           $left-per:  #{$left + "%"};
           left: $left-per;
+          @if $i == $j {
+            color: #000;
+            font-size: 16px;
+          }
         }
 
         .rideGroup[data-id="#{$j}"] {

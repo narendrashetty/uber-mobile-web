@@ -1,5 +1,4 @@
 import React from 'react';
-import Drawer from 'react-toolbox/lib/drawer';
 import classNames from 'classnames';
 import { hashHistory } from 'react-router';
 import MapGL from 'react-map-gl';
