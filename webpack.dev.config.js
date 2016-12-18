@@ -26,6 +26,9 @@ module.exports = {
       'test': /\.css$/,
       'loader': ExtractTextPlugin.extract('style', 'css?modules!postcss!sass')
     }, {
+      'test': /\.(eot|svg|ttf|woff)$/,
+      'loader': 'file-loader'
+    }, {
       'test': /(\.scss)$/,
       'loader': ExtractTextPlugin.extract('style', 'css!postcss!sass?modules')
     }, {

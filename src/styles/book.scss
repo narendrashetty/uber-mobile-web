@@ -14,13 +14,13 @@
   &__header {
     text-align: center;
     height: 50px;
-    display: flex;
-    align-items: center;
+    position: relative;
 
     &__name {
       width: 100px;
       position: absolute;
-      transform: translateX(-50%);
+      transform: translate(-50%, -50%);
+      top: 50%;
       transition: 0.3s;
     }
   }
