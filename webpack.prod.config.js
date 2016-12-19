@@ -8,21 +8,11 @@ module.exports = {
   'devtool': 'source-map',
   'entry': {
     'app': './src/index.js',
-    'vendor1': [
+    'vendor': [
       'react',
       'react-redux',
       'redux',
       'react-router',
-      'redux-thunk'
-    ],
-    'vendor2': [
-      'react-hammerjs',
-      'react-toolbox/lib/drawer',
-      'react-map-gl',
-      'react-dimensions',
-      'viewport-mercator-project',
-      'classnames',
-      'react-geosuggest'
     ]
   },
   'module': {
@@ -62,7 +52,7 @@ module.exports = {
   },
   'plugins': [
     new webpack.optimize.CommonsChunkPlugin({
-      name: ['vendor1', 'vendor2'],
+      name: ['vendor'],
       minChunks: Infinity,
       filename: '[name].[hash].js',
     }),
