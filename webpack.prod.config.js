@@ -22,13 +22,13 @@ module.exports = {
       'loader': 'react-hot!babel'
     }, {
       'test': /\.css$/,
-      'loader': ExtractTextPlugin.extract('style', 'css?modules!postcss!sass')
+      'loader': ExtractTextPlugin.extract({'fallbackLoader': 'style', 'loader': 'css?modules!postcss!sass'})
     }, {
       'test': /\.(eot|svg|ttf|woff)$/,
       'loader': 'file-loader'
     }, {
       'test': /(\.scss)$/,
-      'loader': ExtractTextPlugin.extract('style', 'css!postcss!sass?modules')
+      'loader': ExtractTextPlugin.extract({'fallbackLoader': 'style', 'loader': 'css!postcss!sass?modules'})
     }, {
       'test': /(\.json)$/,
       'loader': 'json-loader'
@@ -44,7 +44,8 @@ module.exports = {
   'output': {
     'path': path.resolve(__dirname, './dist'),
     'publicPath': '/',
-    'filename': '[name].[hash].js'
+    'filename': '[name].[hash].js',
+    'chunkFilename': '[name].[hash].js'
   },
   'devServer': {
     'contentBase': './dist',
@@ -63,7 +64,7 @@ module.exports = {
       'inject': 'body'
     }),
 
-    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin(),
 
     new webpack.optimize.DedupePlugin(),
 
