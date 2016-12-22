@@ -76,7 +76,11 @@ module.exports = {
     }),
 
     new webpack.HotModuleReplacementPlugin(),
-    new ExtractTextPlugin('[name].css')
+    new ExtractTextPlugin('[name].css'),
+
+    new ScriptExtHtmlWebpackPlugin({
+      defaultAttribute: 'defer'
+    })
   ],
   postcss: function () {
     return [autoprefixer({
