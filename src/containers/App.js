@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
+import { hashHistory } from 'react-router';
 import Splash from '../components/Splash';
-import Home from '../components/Home';
 
 export const App = React.createClass({
 
@@ -19,13 +18,17 @@ export const App = React.createClass({
         this.setState({
           'sourceLocation': [pos.coords.longitude, pos.coords.latitude],
           'isSplash': false
+        }, () => {
+          if (this.props.location.pathname === '/') {
+            hashHistory.push('/home');
+          }
         });
       });
     }
   },
 
   render() {
-    if (this.state.isSplash) {
+    if (this.props.location.pathname === '/' || this.state.isSplash) {
       return <Splash />;
     }
     return React.cloneElement(this.props.children, {
