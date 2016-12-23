@@ -5,6 +5,7 @@
   background: #171717;
   z-index: 1;
   transition: 0.5s;
+  transition-delay: 0.5s;
   transform: translateZ(0);
   pointer-events: none;
 
@@ -18,13 +19,13 @@
     border-radius: 50%;
     background: #fff;
     position: absolute;
-    transition: 0.5s;
+    transition: 0.8s;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(1);
 
     &__disappear {
-      transform: scale(8);
+      transform: translate(-50%, -50%) scale(8);
     }
   }
 
@@ -41,10 +42,13 @@
     bottom: 0;
     margin: auto;
     opacity: 1;
-    transition: 0.2s;
+    transition: 0.5s;
 
     &__disappear {
       transform: scale(0);
+      border-radius: 12px;
+      background: #40A0C8;
+      opacity: 0;
     }
   }
   &__logoConnector {
@@ -59,7 +63,7 @@
     bottom: 0;
     margin: auto;
     transform: translateX(-26px) scaleY(1);
-    transition: 0.2s;
+    transition: 0.05s;
     opacity: 1;
     &__disappear {
       transform: translateX(-26px) scaleY(0);

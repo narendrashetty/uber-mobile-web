@@ -32,7 +32,7 @@ export const App = React.createClass({
 
     return (
       <div className="fullHeight fullWidth">
-        <Splash move={false} />
+        <Splash move={(this.props.location.pathname !== '/' && !this.state.isSplash)} />
 
         {(() => {
           if (this.props.location.pathname !== '/' && !this.state.isSplash) {
