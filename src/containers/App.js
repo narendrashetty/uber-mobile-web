@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { hashHistory } from 'react-router';
+
 import Splash from '../components/Splash';
 
 export const App = React.createClass({
@@ -28,12 +29,22 @@ export const App = React.createClass({
   },
 
   render() {
-    if (this.props.location.pathname === '/' || this.state.isSplash) {
-      return <Splash />;
-    }
-    return React.cloneElement(this.props.children, {
-      sourceLocation: this.state.sourceLocation
-    });
+
+    return (
+      <div className="fullHeight fullWidth">
+        <Splash move={false} />
+
+        {(() => {
+          if (this.props.location.pathname !== '/' && !this.state.isSplash) {
+            return React.cloneElement(this.props.children, {
+              sourceLocation: this.state.sourceLocation
+            });
+          }
+        })()}
+      </div>
+    );
+
+    
   }
 });
 

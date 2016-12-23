@@ -1,5 +1,4 @@
 import React from 'react';
-import classNames from 'classnames';
 import { hashHistory } from 'react-router';
 import MapGL from 'react-map-gl';
 import HTMLOverlay from 'react-map-gl/dist/overlays/html.react.js';

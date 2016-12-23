@@ -1,60 +1,69 @@
 .splashScreen {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   color: #fff;
   height: 100%;
-  position: relative;
+  position: absolute;
   background: #171717;
+  z-index: 1;
+  transition: 0.5s;
+  transform: translateZ(0);
+  pointer-events: none;
+
+  &__disappear {
+    opacity: 0;
+  }
 
   &__logo {
-    width: 100px;
-    height: 100px;
+    width: 15vh;
+    height: 15vh;
     border-radius: 50%;
     background: #fff;
-    position: relative;
+    position: absolute;
+    transition: 0.5s;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
-
-    // animation-name: disappear;
-    // animation-duration: 0.3s; /* or: Xms */
-    // animation-iteration-count: 1;
-    // animation-timing-function: ease-out;
-    // animation-fill-mode: forwards;
-    // animation-delay: 1s; /* or: Xms */
-    &:before {
-      content: '';
-      background: #171717;
-      width: 24%;
-      height: 24%;
-      border-radius: 3px;
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      margin: auto;
+    &__disappear {
+      transform: scale(8);
     }
-    &:after {
-      content: '';
-      background: #171717;
-      width: 40%;
-      height: 8%;
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      margin: auto;
-      transform: translateX(-80%);
+  }
+
+  &__logoInner {
+    content: '';
+    background: #171717;
+    width: 24px;
+    height: 24px;
+    border-radius: 3px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    opacity: 1;
+    transition: 0.2s;
+
+    &__disappear {
+      transform: scale(0);
+    }
+  }
+  &__logoConnector {
+    content: '';
+    background: #171717;
+    width: 50px;
+    height: 8px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    transform: translateX(-26px) scaleY(1);
+    transition: 0.2s;
+    opacity: 1;
+    &__disappear {
+      transform: translateX(-26px) scaleY(0);
+      opacity: 0;
     }
   }
 }
-
-// @keyframes disappear {
-//   0%   { opacity: 1; }
-//   100% { 
-//     opacity: 0;
-//     width: 100vh;
-//     height: 100vh;
-//   }
-// }
