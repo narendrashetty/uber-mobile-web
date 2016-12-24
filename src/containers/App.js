@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { hashHistory } from 'react-router';
+import runtime from 'serviceworker-webpack-plugin/lib/runtime';
+import registerEvents from 'serviceworker-webpack-plugin/lib/browser/registerEvents';
 
 import Splash from '../components/Splash';
 
@@ -24,6 +26,29 @@ export const App = React.createClass({
             hashHistory.push('/home');
           }
         });
+      });
+    }
+
+    if ('serviceWorker' in navigator) {
+      const registration = runtime.register();
+
+      registerEvents(registration, {
+        onInstalled: () => {
+          console.log('onInstalled ');
+        },
+        onUpdateReady: () => {
+          console.log('onUpdateReady');
+        },
+
+        onUpdating: () => {
+          console.log('onUpdating');
+        },
+        onUpdateFailed: () => {
+          console.log('onUpdateFailed');
+        },
+        onUpdated: () => {
+          console.log('onUpdated');
+        },
       });
     }
   },

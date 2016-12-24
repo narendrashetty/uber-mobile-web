@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
+const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 
 module.exports = {
   'devtool': 'source-map',
@@ -99,6 +100,10 @@ module.exports = {
 
     new ScriptExtHtmlWebpackPlugin({
       defaultAttribute: 'defer'
+    }),
+
+    new ServiceWorkerWebpackPlugin({
+      entry: path.join(__dirname, './src/sw.js')
     })
   ],
   postcss() {
