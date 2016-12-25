@@ -66,6 +66,7 @@
     "react-toolbox": "2.0.0-beta.1",
     "redux": "3.6.0",
     "redux-thunk": "2.1.0",
+    "sw-toolbox": "^3.4.0",
     "viewport-mercator-project": "^3.0.0-beta3"
   }
 }
