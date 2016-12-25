@@ -84,6 +84,7 @@ export const Home = React.createClass({
         <Map 
           destinationLocation={this.state.destinationLocation}
           sourceLocation={this.props.sourceLocation}
+          isOnline={this.props.isOnline}
         />
         {(() => {
           if (!this.state.isBook) {
@@ -91,10 +92,13 @@ export const Home = React.createClass({
               onSuggestSelect={this.onSuggestSelect}
               gotoSearch={this.gotoSearch}
               isSearch={this.state.isSearch}
+              isOnline={this.props.isOnline}
             />;
           }
         })()}
-        {this.props.children}
+        {React.Children.map(this.props.children, {
+          'isOnline': this.props.isOnline
+        })}
         {this.renderMenu()}
       </div>
     );

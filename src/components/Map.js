@@ -153,16 +153,28 @@ export const Map = React.createClass({
   },
 
   renderMap() {
+    if (this.props.isOnline) {
+      return (
+        <MapGL
+          {...this.state.viewport}
+          onChangeViewport={(newViewport) => {
+            const viewport = Object.assign({}, this.state.viewport, newViewport);
+            this.setState({viewport});
+          }}
+        >
+          {this.renderOverlay()}
+        </MapGL>
+      );
+    } else {
+      return this.renderOffline();
+    }
+  },
+
+  renderOffline() {
     return (
-      <MapGL
-        {...this.state.viewport}
-        onChangeViewport={(newViewport) => {
-          const viewport = Object.assign({}, this.state.viewport, newViewport);
-          this.setState({viewport});
-        }}
-      >
-        {this.renderOverlay()}
-      </MapGL>
+      <div className="map__offline">
+        You need Internet access to access Map :(
+      </div>
     );
   },
 

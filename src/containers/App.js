@@ -10,7 +10,8 @@ export const App = React.createClass({
 
   getInitialState() {
     return {
-      'isSplash': true
+      'isSplash': true,
+      'isOnline': window.navigator.onLine
     }
   },
 
@@ -27,6 +28,18 @@ export const App = React.createClass({
         });
       });
     }
+
+    window.addEventListener('online', () => {
+      this.setState({
+        'isOnline': true
+      });
+    });
+
+    window.addEventListener('offline', () => {
+      this.setState({
+        'isOnline': false
+      });
+    });
   },
 
   render() {
@@ -38,7 +51,8 @@ export const App = React.createClass({
         {(() => {
           if (this.props.location.pathname !== '/' && !this.state.isSplash) {
             return React.cloneElement(this.props.children, {
-              sourceLocation: this.state.sourceLocation
+              'sourceLocation': this.state.sourceLocation,
+              'isOnline': this.state.isOnline
             });
           }
         })()}

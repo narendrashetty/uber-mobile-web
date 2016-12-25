@@ -7,7 +7,8 @@ export const Search = React.createClass({
   render() {
     return (
       <div className={classNames('searchBox', {
-        'searchBox__expand': this.props.isSearch
+        'searchBox__expand': this.props.isSearch,
+        'searchBox__offline': !this.props.isOnline
       })}>
 
         {(() => {
