@@ -96,9 +96,15 @@ export const Home = React.createClass({
             />;
           }
         })()}
-        {React.Children.map(this.props.children, {
-          'isOnline': this.props.isOnline
-        })}
+
+        {(() => {
+          if (this.props.children) {
+            return React.cloneElement(this.props.children, {
+              'isOnline': this.props.isOnline
+            })
+          }
+        })()}
+        
         {this.renderMenu()}
       </div>
     );

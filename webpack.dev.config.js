@@ -39,15 +39,18 @@ module.exports = {
       'test': /\.(eot|svg|ttf|woff)$/,
       'loader': 'file-loader'
     }, {
+      'test': /\.(jpg|png)$/,
+      'loader': 'file?name=images/[name].[ext]'
+    }, {
       'test': /(\.scss)$/,
       'loader': ExtractTextPlugin.extract({'fallbackLoader': 'style', 'loader': 'css!postcss!sass?modules'})
     }, {
-      'test': /(\.json)$/,
-      'loader': 'json-loader'
+      'test': /manifest.json$/,
+      'loader': 'file?name=manifest.json'
     }]
   },
   'resolve': {
-    'extensions': ['', '.js', '.sass'],
+    'extensions': ['', '.js', '.sass', '.json'],
     'alias': {
       'mapbox-gl/js/geo/transform': path.join(__dirname, "/node_modules/mapbox-gl/js/geo/transform"),
       'mapbox-gl': path.join(__dirname, "/node_modules/mapbox-gl/dist/mapbox-gl.js")

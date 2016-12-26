@@ -31,11 +31,14 @@ module.exports = {
       'test': /\.(eot|svg|ttf|woff)$/,
       'loader': 'file-loader'
     }, {
+      'test': /\.(jpg|png)$/,
+      'loader': 'file?name=images/[name].[ext]'
+    }, {
       'test': /(\.scss)$/,
       'loader': ExtractTextPlugin.extract({'fallbackLoader': 'style', 'loader': 'css!postcss!sass?modules'})
     }, {
-      'test': /(\.json)$/,
-      'loader': 'json-loader'
+      'test': /manifest.json$/,
+      'loader': 'file?name=manifest.json'
     }]
   },
   'resolve': {
