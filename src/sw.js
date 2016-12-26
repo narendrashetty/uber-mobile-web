@@ -11,10 +11,10 @@ let ASSETS = [
   './'
 ];
 
-toolbox.options.debug = true;
+toolbox.options.debug = false;
 
 toolbox.options.cache = {
-  'name': 'uber-cache',
+  'name': `uber-cache-${VERSION}`,
   'maxEntries': 100,
   'maxAgeSeconds': 2592e3
 };
@@ -23,12 +23,18 @@ toolbox.options.cache = {
 self.oninstall = event => self.skipWaiting();
 
 self.onactivate = event => {
-  const cacheWhitelist = [`static-v1`, `dynamic--v1`];
+  const cacheWhitelist = [
+    `uber-cache-${VERSION}`,
+    `js-assets-${VERSION}`,
+    `map-assets-${VERSION}`,
+    `css-assets-${VERSION}`,
+    `fonts-assets-${VERSION}`
+  ];
 
   event.waitUntil(
     global.caches.keys().then(cacheNames => {
       return Promise.all(cacheNames.map(cacheName => {
-        if (cacheWhitelist.indexOf(cacheName) > -1) {
+        if (cacheWhitelist.indexOf(cacheName) === -1) {
           return caches.delete(cacheName);
         }    
       }));
@@ -44,7 +50,7 @@ toolbox.router.get('(.*).js', toolbox.fastest, {
   'origin':/.herokuapp.com|localhost|maps.googleapis.com/,
   'mode':'cors',
   'cache': {
-    'name': 'js-assets',
+    'name': `js-assets-${VERSION}`,
     'maxEntries': 50,
     'maxAgeSeconds': 2592e3
   }
@@ -54,7 +60,7 @@ toolbox.router.get(/maps\/api\/js/, toolbox.fastest, {
   'origin':/maps.googleapis.com/,
   'mode':'cors',
   'cache': {
-    'name': 'map-assets',
+    'name': `map-assets-${VERSION}`,
     'maxEntries': 50,
     'maxAgeSeconds': 2592e3
   }
@@ -64,7 +70,7 @@ toolbox.router.get('(.*).css', toolbox.fastest, {
   'origin':/.herokuapp.com|localhost/,
   'mode':'cors',
   'cache': {
-    'name': 'css-assets',
+    'name': `css-assets-${VERSION}`,
     'maxEntries': 50,
     'maxAgeSeconds': 2592e3
   }
@@ -74,7 +80,7 @@ toolbox.router.get(/\.(eot|svg|ttf|woff)$/, toolbox.fastest, {
   'origin':/.herokuapp.com|localhost/,
   'mode':'cors',
   'cache': {
-    'name': 'fonts-assets',
+    'name': `fonts-assets-${VERSION}`,
     'maxEntries': 50,
     'maxAgeSeconds': 2592e3
   }
