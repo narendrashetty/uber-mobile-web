@@ -12,6 +12,15 @@
   top: 80px;
   box-shadow: 0px 3px 10px #d8d8d8;
   transition: 0.3s;
+  animation-name: positionIt;
+  animation-duration: 1.5s;
+  animation-fill-mode: forwards;
+  animation-timing-function: cubic-bezier(1,.01,.35,1.03);
+  animation-iteration-count: 1;
+
+  &__inactive {
+    transform: scale(0.5) translateY(-150px);
+  }
 
   &__destination, &__source {
     display: flex;
@@ -184,7 +193,14 @@
 
 
 
-
+@keyframes positionIt {
+  from {
+    transform: scale(.5) translateY(-240px);
+  }
+  to {
+    transform: scale(1) translateY(0);
+  }
+}
 
 
 
