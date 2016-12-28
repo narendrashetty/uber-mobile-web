@@ -6,6 +6,14 @@ import SVGOverlay from 'react-map-gl/dist/overlays/svg.react.js';
 import Dimensions from 'react-dimensions';
 import ViewportMercator from 'viewport-mercator-project';
 
+const CONFIG = {
+  'mapStyle': 'mapbox://styles/mapbox/basic-v9',
+  'mapboxApiAccessToken': 'pk.eyJ1IjoibmFyZW5kcmFzaGV0dHkiLCJhIjoiY2l3am9veHJ2MDAwbDJ0cjI1NTkyM3llNSJ9.l2l38Z5jAyCO0_aOE-ABlA',
+  'zoom': 12.011557070552028,
+  'startDragLngLat': null,
+  'isDragging': null
+};
+
 function round(x, n) {
   const tenN = Math.pow(10, n);
   return Math.round(x * tenN) / tenN;
@@ -16,18 +24,7 @@ export const Map = React.createClass({
   getInitialState() {
     return {
       'isLoading': true,
-      'viewport': {
-        'width': this.props.containerWidth,
-        'height': this.props.containerHeight,
-        'mapStyle': 'mapbox://styles/mapbox/basic-v9',
-        'mapboxApiAccessToken': 'pk.eyJ1IjoibmFyZW5kcmFzaGV0dHkiLCJhIjoiY2l3am9veHJ2MDAwbDJ0cjI1NTkyM3llNSJ9.l2l38Z5jAyCO0_aOE-ABlA',
-        'latitude': 4.926588,
-        'longitude': 52.363632,
-        'zoom': 12.011557070552028,
-        'startDragLngLat': null,
-        'isDragging': null
-      },
-      'sourceLocation': [52.363632, 4.926588]
+      'viewport': {}
     };
   },
 
@@ -40,12 +37,43 @@ export const Map = React.createClass({
   },
 
   setup(props) {
-    const viewport = Object.assign({}, this.state.viewport, {
-      'latitude': this.props.sourceLocation[1],
-      'longitude': this.props.sourceLocation[0]
-    });
+    let latitude = this.props.sourceLocation[1];
+    let longitude = this.props.sourceLocation[0];
+    let height = this.props.containerHeight;
+    let width = this.props.containerWidth;
+
+
+    if (this.props.destinationLocation) {
+      let diff = [
+        Math.abs(this.props.sourceLocation[0] - this.props.destinationLocation[0]) / 2,
+        Math.abs(this.props.sourceLocation[1] - this.props.destinationLocation[1]) / 2
+      ];
+
+      let center = [
+        this.props.destinationLocation[0] + diff[0],
+        this.props.destinationLocation[1] + diff[1]
+      ];
+
+      if (this.props.sourceLocation[0] < this.props.destinationLocation[0]) {
+        center[0] = this.props.sourceLocation[0] + diff[0];
+      }
+
+      if (this.props.sourceLocation[1] < this.props.destinationLocation[1]) {
+        center[1] = this.props.sourceLocation[1] + diff[1];
+      }
+      latitude = center[1];
+      longitude = center[0];
+      height = this.props.containerHeight / 2;
+    }
+
     this.setState({
-      viewport,
+      'viewport': {
+        ...CONFIG,
+        width,
+        height,
+        latitude,
+        longitude
+      },
       'isLoading': false
     });
   },
@@ -158,8 +186,9 @@ export const Map = React.createClass({
         <MapGL
           {...this.state.viewport}
           onChangeViewport={(newViewport) => {
-            const viewport = Object.assign({}, this.state.viewport, newViewport);
-            this.setState({viewport});
+            this.setState({
+              'viewport': Object.assign({}, this.state.viewport, newViewport)
+            });
           }}
         >
           {this.renderOverlay()}

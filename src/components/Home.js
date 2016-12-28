@@ -32,6 +32,9 @@ export const Home = React.createClass({
   handleToggle() {
     if (!this.state.isHome) {
       hashHistory.push('/home');
+      this.setState({
+        'destinationLocation': null
+      });
     } else {
       this.setState({active: !this.state.active});
     }
