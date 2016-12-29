@@ -8,7 +8,7 @@ const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 
 module.exports = {
-  'devtool': 'source-map',
+  'devtool': 'cheap-module-eval-source-map',
   'entry': {
     'app': './src/index.js',
     'vendor': [

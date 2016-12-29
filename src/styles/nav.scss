@@ -1,10 +1,40 @@
 .nav {
-  background: #4d6473;
+  background: #000;
   width: 20px;
-  height: 20px;
+  height: 2px;
   position: absolute;
   left: 20px;
   top: 20px;
+  transform: scale(0.8);
+
+  &:before, &:after {
+    content: '';
+    width: 20px;
+    height: 2px;
+    background: #000;
+    top: 5px;
+    position: absolute;
+  }
+
+  &:after {
+    top: 10px;
+  }
+
+  &--back {
+    top: 25px;
+    &:before, &:after {
+      content: '';
+      width: 13px;
+      top: -4px;
+      left: -2px;
+      transform: rotate(-45deg);
+    }
+
+    &:after {
+      top: 4px;
+      transform: rotate(45deg);
+    }
+  }
 }
 
 .ubDrawer {

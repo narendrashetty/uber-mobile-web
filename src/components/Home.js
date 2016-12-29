@@ -3,6 +3,7 @@ import Drawer from 'react-toolbox/lib/drawer';
 import { hashHistory } from 'react-router';
 import Map from './Map';
 import Search from './Search';
+import classNames from 'classnames';
 
 export const Home = React.createClass({
 
@@ -56,7 +57,12 @@ export const Home = React.createClass({
   renderMenu() {
     return (
       <div>
-        <div className="nav" onClick={this.handleToggle}></div>
+        <div
+          className={classNames('nav', {
+            'nav--back': !this.state.isHome
+          })}
+          onClick={this.handleToggle}>
+        </div>
         <Drawer active={this.state.active} onOverlayClick={this.handleToggle} className="ubDrawer">
           <div className="ubDrawer__header">
             <div className="ubDrawer__dp">
