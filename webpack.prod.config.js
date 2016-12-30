@@ -8,7 +8,7 @@ const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 
 module.exports = {
-  'devtool': 'cheap-module-eval-source-map',
+  'devtool': 'source-map',
   'entry': {
     'app': './src/index.js',
     'vendor': [
@@ -68,7 +68,15 @@ module.exports = {
     new HtmlWebpackPlugin({
       'template': './index.html',
       'filename': 'index.html',
-      'inject': 'body'
+      'inject': 'body',
+      // 'minify': {
+      //   'caseSensitive': true,
+      //   'collapseInlineTagWhitespace': true,
+      //   'collapseWhitespace': true,
+      //   'minifyCSS': true,
+      //   'removeEmptyAttributes': true,
+      //   'removeComments': true
+      // }
     }),
 
     new webpack.optimize.OccurrenceOrderPlugin(),
