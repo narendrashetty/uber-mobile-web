@@ -3,34 +3,26 @@ import fs from 'fs';
 import Express from 'express';
 import React from 'react';
 import { Provider } from 'react-redux';
-import App from './containers/App';
 import { renderToString } from 'react-dom/server';
 import { match, RouterContext } from 'react-router';
+
 import createMemoryHistory from 'history/lib/createMemoryHistory';
 import configureStore from './store';
-import createRoutes from './routes';
+import routes from './routes';
 
 const server = Express();
 const port = 3000;
 
-server.use('/manifest.json', Express.static('./dist/static/manifest.json'));
+server.use('/manifest.json', Express.static('./dist/manifest.json'));
 
 server.use('/sw.js', Express.static('./dist/sw.js'));
 
 server.use('/static', Express.static('./dist/static'));
 
-if (typeof System === "undefined") {
-  global.System = {
-    import: function(path) {
-      return Promise.resolve(require(path));
-    }
-  };
-}
-
 
 server.use((req, res)=> {
   match({
-    'routes': createRoutes(),
+    'routes': routes,
     'location': req.url
   }, (error, redirectLocation, renderProps) => {
     if (error) {
@@ -55,7 +47,8 @@ server.use((req, res)=> {
         if (err) {
           return console.log(err);
         }
-        const document = file.replace(/<div id="app"><\/div>/, `<div id="app">${html}</div>`);
+        let document = file.replace(/<div id="app"><\/div>/, `<div id="app">${html}</div>`);
+        document = document.replace(/'preloadedState'/, `'${JSON.stringify(preloadedState)}'`);
         res.send(document);
       });
 

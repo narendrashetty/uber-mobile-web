@@ -1,3 +1,5 @@
+const isBrowser = typeof window !== 'undefined';
+
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -10,7 +12,7 @@ export const App = React.createClass({
 
   getInitialState() {
     let isOnline = true;
-    if (process.env.BROWSER) {
+    if (isBrowser) {
       isOnline = window.navigator.onLine;
     }
 
@@ -21,8 +23,7 @@ export const App = React.createClass({
   },
 
   componentDidMount() {
-    console.log(process.env.BROWSER);
-    if (process.env.BROWSER) {
+    if (isBrowser) {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((pos) => {
           this.setState({

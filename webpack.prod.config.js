@@ -32,7 +32,7 @@ module.exports = {
       'loader': 'file?name=static/fonts/[name].[ext]'
     }, {
       'test': /\.(jpg|png)$/,
-      'loader': 'file?name=images/[name].[ext]'
+      'loader': 'file?name=static/images/[name].[ext]'
     }, {
       'test': /(\.scss)$/,
       'loader': ExtractTextPlugin.extract('style', 'css!postcss!sass?modules')
@@ -51,8 +51,8 @@ module.exports = {
   'output': {
     'path': path.resolve(__dirname, './dist'),
     'publicPath': '/',
-    'filename': '[name].[hash].js',
-    'chunkFilename': '[name].[hash].js'
+    'filename': 'static/js/[name].[hash].js',
+    'chunkFilename': 'static/js/[name].[hash].js'
   },
   'devServer': {
     'contentBase': './dist',
@@ -62,7 +62,7 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin({
       name: ['vendor'],
       minChunks: Infinity,
-      filename: '[name].[hash].js',
+      filename: 'static/js/[name].[hash].js',
     }),
 
     new HtmlWebpackPlugin({
@@ -83,7 +83,7 @@ module.exports = {
 
     new webpack.optimize.DedupePlugin(),
 
-    new ExtractTextPlugin('[name].css'),
+    new ExtractTextPlugin('static/css/[name].[hash].css'),
 
     new webpack.optimize.UglifyJsPlugin({
       'compressor': {

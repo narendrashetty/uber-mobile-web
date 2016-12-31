@@ -1,5 +1,5 @@
 import React from 'react';
-// import Drawer from 'react-toolbox/lib/drawer';
+import Drawer from 'react-toolbox/lib/drawer';
 import { hashHistory } from 'react-router';
 import Map from './Map';
 import Search from './Search';

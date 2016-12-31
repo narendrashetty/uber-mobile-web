@@ -6,6 +6,8 @@ import icon192 from './images/192.png';
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
+import { hashHistory, match, Router } from 'react-router';
+import routes from './routes';
 
 import './styles/app.scss';
 
@@ -13,15 +15,29 @@ import createRoutes from './routes';
 import configureStore from './store';
 import runtime from 'serviceworker-webpack-plugin/lib/runtime';
 
-const store = configureStore();
+let preloadedState = window.__PRELOADED_STATE__;
+if (preloadedState === 'preloadedState') {
+  preloadedState = {};
+} else {
+  preloadedState = JSON.parse(preloadedState);
+}
+
+const store = configureStore(preloadedState);
 
 if ('serviceWorker' in navigator) {
   const registration = runtime.register();
 }
 
-render(
-  <Provider store={store}>
-    { createRoutes() }
-  </Provider>,
-  document.getElementById('app')
-);
+
+match({ 
+  'history': hashHistory,
+  routes
+}, (error, redirectLocation, renderProps) => {
+
+  render(
+    <Provider store={store}>
+      <Router {...renderProps} />
+    </Provider>,
+    document.getElementById('app')
+  );
+});

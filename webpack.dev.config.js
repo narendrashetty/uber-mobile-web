@@ -41,7 +41,7 @@ module.exports = {
       'loader': ExtractTextPlugin.extract('style', 'css!postcss!sass?modules')
     }, {
       'test': /manifest.json$/,
-      'loader': 'file?name=static/manifest.json'
+      'loader': 'file?name=manifest.json'
     }]
   },
   'resolve': {
