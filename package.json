@@ -5,13 +5,27 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "./node_modules/.bin/webpack --config=webpack.dev.config.js && babel-node ./src/server.js",
+    "dev": "./node_modules/.bin/webpack-dev-server --config=webpack.dev.config.js",
     "start": "env NODE_ENV=production ./node_modules/.bin/webpack --config=webpack.prod.config.js && babel-node ./src/server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "react"
+    ],
+    "plugins": [
+      "transform-async-to-generator",
+      "transform-runtime",
+      "transform-object-rest-spread"
+    ]
+  },
+  "dependencies": {
     "autoprefixer": "6.5.3",
     "babel-core": "6.18.2",
     "babel-loader": "6.2.8",
@@ -36,20 +50,7 @@
     "style-loader": "0.13.1",
     "web-app-manifest-loader": "^0.1.1",
     "webpack": "^1.14.0",
-    "webpack-dev-server": "^1.16.2"
-  },
-  "babel": {
-    "presets": [
-      "es2015",
-      "react"
-    ],
-    "plugins": [
-      "transform-async-to-generator",
-      "transform-runtime",
-      "transform-object-rest-spread"
-    ]
-  },
-  "dependencies": {
+    "webpack-dev-server": "^1.16.2",
     "classnames": "^2.2.5",
     "deck.gl": "^3.1.1",
     "immutability-helper": "^2.0.0",
