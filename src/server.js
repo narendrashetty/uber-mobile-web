@@ -11,7 +11,7 @@ import configureStore from './store';
 import routes from './routes';
 
 const server = Express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 server.use('/manifest.json', Express.static('./dist/manifest.json'));
 
@@ -59,7 +59,7 @@ server.use((req, res)=> {
 });
 
 server.listen(port);
-console.log('=== Go to http://localhost:3000 ===');
+console.log('=== Go to http://localhost:' + port + ' ===');
 
 
 
