@@ -6,24 +6,6 @@ import Book from './components/Book';
 
 export default function() {
 
-  const rootRoute = {
-    childRoutes: [{
-      path: '/',
-      component: require('./containers/App'),
-      childRoutes: [
-        require('./routes/Calendar'),
-        require('./routes/Course'),
-        require('./routes/Grades'),
-        require('./routes/Messages'),
-        require('./routes/Profile')
-      ]
-    }]
-  };
-
-  return (
-    <Router history={ hashHistory } routes{routeRoute}>
-    </Router>
-  );
 
 
   return (

@@ -6,12 +6,6 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 
-const sassLoaders = [
-  'css',
-  'postcss-loader',
-  'sass'
-];
-
 module.exports = {
   'devtool': 'inline-source-map',
   'entry': {
@@ -24,7 +18,8 @@ module.exports = {
       'react',
       'react-redux',
       'redux',
-      'react-router'
+      'react-router',
+      'redux-thunk'
     ]
   },
   'module': {
@@ -34,19 +29,19 @@ module.exports = {
       'loader': 'react-hot!babel'
     }, {
       'test': /\.css$/,
-      'loader': ExtractTextPlugin.extract({'fallbackLoader': 'style', 'loader': 'css?modules!postcss!sass'})
+      'loader': ExtractTextPlugin.extract('style', 'css?modules!postcss!sass')
     }, {
       'test': /\.(eot|svg|ttf|woff)$/,
-      'loader': 'file-loader'
+      'loader': 'file?name=static/fonts/[name].[ext]'
     }, {
       'test': /\.(jpg|png)$/,
-      'loader': 'file?name=images/[name].[ext]'
+      'loader': 'file?name=static/images/[name].[ext]'
     }, {
       'test': /(\.scss)$/,
-      'loader': ExtractTextPlugin.extract({'fallbackLoader': 'style', 'loader': 'css!postcss!sass?modules'})
+      'loader': ExtractTextPlugin.extract('style', 'css!postcss!sass?modules')
     }, {
       'test': /manifest.json$/,
-      'loader': 'file?name=manifest.json'
+      'loader': 'file?name=static/manifest.json'
     }]
   },
   'resolve': {
@@ -59,8 +54,8 @@ module.exports = {
   'output': {
     'path': __dirname + '/dist',
     'publicPath': '/',
-    'filename': '[name].[hash].js',
-    'chunkFilename': '[name].[hash].js',
+    'filename': 'static/js/[name].[hash].js',
+    'chunkFilename': 'static/js/[name].[hash].js',
   },
   'devServer': {
     'contentBase': './dist',
@@ -70,7 +65,7 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin({
       name: ['vendor'],
       minChunks: Infinity,
-      filename: '[name].[hash].js',
+      filename: 'static/js/[name].[hash].js',
     }),
 
     new HtmlWebpackPlugin({
@@ -80,7 +75,7 @@ module.exports = {
     }),
 
     new webpack.HotModuleReplacementPlugin(),
-    new ExtractTextPlugin('[name].css'),
+    new ExtractTextPlugin('static/css/[name].css'),
 
     new ScriptExtHtmlWebpackPlugin({
       defaultAttribute: 'defer'
@@ -103,8 +98,5 @@ module.exports = {
         'Safari >= 6'
       ]
     })];
-  },
-  'node': {
-    'fs': 'empty'
   }
 };

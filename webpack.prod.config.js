@@ -26,16 +26,16 @@ module.exports = {
       'loader': 'react-hot!babel'
     }, {
       'test': /\.css$/,
-      'loader': ExtractTextPlugin.extract({'fallbackLoader': 'style', 'loader': 'css?modules!postcss!sass'})
+      'loader': ExtractTextPlugin.extract('style', 'css?modules!postcss!sass')
     }, {
       'test': /\.(eot|svg|ttf|woff)$/,
-      'loader': 'file-loader'
+      'loader': 'file?name=static/fonts/[name].[ext]'
     }, {
       'test': /\.(jpg|png)$/,
       'loader': 'file?name=images/[name].[ext]'
     }, {
       'test': /(\.scss)$/,
-      'loader': ExtractTextPlugin.extract({'fallbackLoader': 'style', 'loader': 'css!postcss!sass?modules'})
+      'loader': ExtractTextPlugin.extract('style', 'css!postcss!sass?modules')
     }, {
       'test': /manifest.json$/,
       'loader': 'file?name=manifest.json'

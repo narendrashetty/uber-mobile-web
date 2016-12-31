@@ -9,24 +9,32 @@ import Splash from '../components/Splash';
 export const App = React.createClass({
 
   getInitialState() {
+    let isOnline = true;
+    if (process.env.BROWSER) {
+      isOnline = window.navigator.onLine;
+    }
+
     return {
       'isSplash': true,
-      'isOnline': window.navigator.onLine
+      isOnline
     }
   },
 
   componentDidMount() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((pos) => {
-        this.setState({
-          'sourceLocation': [pos.coords.longitude, pos.coords.latitude],
-          'isSplash': false
-        }, () => {
-          if (this.props.location.pathname === '/') {
-            hashHistory.push('/home');
-          }
+    console.log(process.env.BROWSER);
+    if (process.env.BROWSER) {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((pos) => {
+          this.setState({
+            'sourceLocation': [pos.coords.longitude, pos.coords.latitude],
+            'isSplash': false
+          }, () => {
+            if (this.props.location.pathname === '/') {
+              hashHistory.push('/home');
+            }
+          });
         });
-      });
+      }
     }
 
     window.addEventListener('online', () => {
