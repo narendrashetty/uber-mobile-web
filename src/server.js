@@ -5,6 +5,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { renderToString } from 'react-dom/server';
 import { match, RouterContext } from 'react-router';
+import expressStaticGzip from 'express-static-gzip';
 
 import createMemoryHistory from 'history/lib/createMemoryHistory';
 import configureStore from './store';
@@ -14,10 +15,8 @@ const server = Express();
 const port = process.env.PORT || 3000;
 
 server.use('/manifest.json', Express.static('./dist/manifest.json'));
-
-server.use('/sw.js', Express.static('./dist/sw.js'));
-
-server.use('/static', Express.static('./dist/static'));
+server.use('/sw.js',  Express.static('./dist/sw.js'));
+server.use('/static', expressStaticGzip('./dist/static'));
 
 
 server.use((req, res)=> {

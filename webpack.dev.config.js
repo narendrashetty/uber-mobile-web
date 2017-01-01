@@ -71,15 +71,15 @@ module.exports = {
     new HtmlWebpackPlugin({
       'template': './index.html',
       'filename': 'index.html',
-      'inject': false
+      'inject': 'body'
     }),
 
     new webpack.HotModuleReplacementPlugin(),
     new ExtractTextPlugin('static/css/[name].[hash].css'),
 
-    // new ScriptExtHtmlWebpackPlugin({
-    //   defaultAttribute: 'defer'
-    // }),
+    new ScriptExtHtmlWebpackPlugin({
+      defaultAttribute: 'defer'
+    }),
 
     new ServiceWorkerWebpackPlugin({
       entry: path.join(__dirname, './src/sw.js')

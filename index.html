@@ -10,12 +10,9 @@
       background: #171717;
     }
   </style>
-  <% for (var css in htmlWebpackPlugin.files.css) { %>
-  <link href="<%= htmlWebpackPlugin.files.css[css] %>" rel="stylesheet">
-  <% } %>
 
   <% for (var js in htmlWebpackPlugin.files.js) { %>
-  <link rel="prefetch" href="<%= htmlWebpackPlugin.files.js[js] %>">
+  <link rel="prefetch" href="<%= htmlWebpackPlugin.files.js[js] %>" as="script">
   <% } %>
 </head>
 <body>
@@ -28,8 +25,9 @@
   <script type="text/javascript">
     window.__PRELOADED_STATE__ ='preloadedState';
   </script>
+  <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDBaBOd2W_uUHMgjKdTgxsio3EhrEKqPVg" defer></script>
 
-  <script>    
+<!--   <script>    
     var loadJS = function(src) {
       var ref = document.getElementsByTagName( "script" )[0];
       var script = document.createElement("script");
@@ -44,6 +42,6 @@
     <% for (var js in htmlWebpackPlugin.files.js) { %>
     loadJS('<%= htmlWebpackPlugin.files.js[js] %>');  
     <% } %>
-  </script>
+  </script> -->
 </body>
 </html>

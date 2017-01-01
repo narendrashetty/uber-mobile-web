@@ -68,11 +68,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       'template': './index.html',
       'filename': 'index.html',
-      'inject': false,
+      'inject': 'body',
       'minify': {
-        'caseSensitive': true,
-        'collapseInlineTagWhitespace': true,
-        'collapseWhitespace': true,
         'minifyCSS': true,
         'removeEmptyAttributes': true,
         'removeComments': true
@@ -101,17 +98,17 @@ module.exports = {
       'process.env.NODE_ENV': JSON.stringify('production')
     }),
     new webpack.optimize.AggressiveMergingPlugin(),
-    // new CompressionPlugin({
-    //   asset: "[path].gz[query]",
-    //   algorithm: "gzip",
-    //   test: /\.js$|\.css$|\.html$/,
-    //   threshold: 10240,
-    //   minRatio: 0.8
-    // }),
+    new CompressionPlugin({
+      asset: "[path].gz[query]",
+      algorithm: "gzip",
+      test: /\.js$|\.css$|\.html$/,
+      threshold: 10240,
+      minRatio: 0.8
+    }),
 
-    // new ScriptExtHtmlWebpackPlugin({
-    //   defaultAttribute: 'defer'
-    // }),
+    new ScriptExtHtmlWebpackPlugin({
+      defaultAttribute: 'defer'
+    }),
 
     new ServiceWorkerWebpackPlugin({
       entry: path.join(__dirname, './src/sw.js')
