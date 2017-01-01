@@ -8,6 +8,7 @@
   transition-delay: 0.5s;
   transform: translateZ(0);
   pointer-events: none;
+  overflow: hidden;
 
   &__disappear {
     opacity: 0;
