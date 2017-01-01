@@ -11,7 +11,7 @@
       background: #171717;
     }
   </style>
-
+  <link rel="prefetch" href=https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDBaBOd2W_uUHMgjKdTgxsio3EhrEKqPVg" as="script">
   <% for (var js in htmlWebpackPlugin.files.js) { %>
   <link rel="prefetch" href="<%= htmlWebpackPlugin.files.js[js] %>" as="script">
   <% } %>
