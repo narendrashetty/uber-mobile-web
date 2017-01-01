@@ -68,15 +68,15 @@ module.exports = {
     new HtmlWebpackPlugin({
       'template': './index.html',
       'filename': 'index.html',
-      'inject': 'body',
-      // 'minify': {
-      //   'caseSensitive': true,
-      //   'collapseInlineTagWhitespace': true,
-      //   'collapseWhitespace': true,
-      //   'minifyCSS': true,
-      //   'removeEmptyAttributes': true,
-      //   'removeComments': true
-      // }
+      'inject': false,
+      'minify': {
+        'caseSensitive': true,
+        'collapseInlineTagWhitespace': true,
+        'collapseWhitespace': true,
+        'minifyCSS': true,
+        'removeEmptyAttributes': true,
+        'removeComments': true
+      }
     }),
 
     new webpack.optimize.OccurrenceOrderPlugin(),
@@ -109,9 +109,9 @@ module.exports = {
     //   minRatio: 0.8
     // }),
 
-    new ScriptExtHtmlWebpackPlugin({
-      defaultAttribute: 'defer'
-    }),
+    // new ScriptExtHtmlWebpackPlugin({
+    //   defaultAttribute: 'defer'
+    // }),
 
     new ServiceWorkerWebpackPlugin({
       entry: path.join(__dirname, './src/sw.js')
