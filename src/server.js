@@ -15,6 +15,8 @@ const server = Express();
 const port = process.env.PORT || 3000;
 
 server.use('/manifest.json', Express.static('./dist/manifest.json'));
+server.use('/favicon.ico', Express.static('./dist/static/images/favicon.ico'));
+
 server.use('/sw.js',  Express.static('./dist/sw.js', {
   'maxAge': 31536000,
   setHeaders: function(res, path, stat) {

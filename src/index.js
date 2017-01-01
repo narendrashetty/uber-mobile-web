@@ -2,6 +2,7 @@ import manifest from './manifest.json';
 import icon96 from './images/96.png';
 import icon144 from './images/144.png';
 import icon192 from './images/192.png';
+import favicon from './images/favicon.ico';
 
 import React from 'react';
 import { render } from 'react-dom';

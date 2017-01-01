@@ -31,7 +31,7 @@ module.exports = {
       'test': /\.(eot|svg|ttf|woff)$/,
       'loader': 'file?name=static/fonts/[name].[ext]'
     }, {
-      'test': /\.(jpg|png)$/,
+      'test': /\.(jpg|png|ico)$/,
       'loader': 'file?name=static/images/[name].[ext]'
     }, {
       'test': /(\.scss)$/,
