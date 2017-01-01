@@ -15,8 +15,20 @@ const server = Express();
 const port = process.env.PORT || 3000;
 
 server.use('/manifest.json', Express.static('./dist/manifest.json'));
-server.use('/sw.js',  Express.static('./dist/sw.js'));
-server.use('/static', expressStaticGzip('./dist/static'));
+server.use('/sw.js',  Express.static('./dist/sw.js', {
+  'maxAge': 31536000,
+  setHeaders: function(res, path, stat) {
+    res.setHeader("Expires", new Date(Date.now() + 2592000000).toUTCString());
+    return res;
+  }
+}));
+server.use('/static', expressStaticGzip('./dist/static', {
+  'maxAge': 31536000,
+  setHeaders: function(res, path, stat) {
+    res.setHeader("Expires", new Date(Date.now() + 2592000000).toUTCString());
+    return res;
+  }
+}));
 
 
 server.use((req, res)=> {
@@ -48,6 +60,8 @@ server.use((req, res)=> {
         }
         let document = file.replace(/<div id="app"><\/div>/, `<div id="app">${html}</div>`);
         document = document.replace(/'preloadedState'/, `'${JSON.stringify(preloadedState)}'`);
+        res.setHeader('Cache-Control', 'public, max-age=31536000');
+        res.setHeader("Expires", new Date(Date.now() + 2592000000).toUTCString());
         res.send(document);
       });
 
