@@ -1,38 +1,47 @@
 .nav {
-  background: #000;
-  width: 20px;
-  height: 2px;
   position: absolute;
   left: 20px;
   top: 20px;
-  transform: scale(0.8);
+  height: 15px;
+  width: 20px;
 
-  &:before, &:after {
-    content: '';
+  &__icon {
+    background: #000;
     width: 20px;
     height: 2px;
-    background: #000;
-    top: 5px;
+    transform: scale(0.8);
     position: absolute;
-  }
-
-  &:after {
-    top: 10px;
-  }
-
-  &--back {
-    top: 25px;
+    top: 0;
+    
     &:before, &:after {
       content: '';
-      width: 13px;
-      top: -4px;
-      left: -2px;
-      transform: rotate(-45deg);
+      width: 20px;
+      height: 2px;
+      background: #000;
+      top: 5px;
+      position: absolute;
     }
 
     &:after {
-      top: 4px;
-      transform: rotate(45deg);
+      top: 10px;
+    }
+  }
+
+  &--back {
+    .nav__icon {
+      top: 6px;
+      &:before, &:after {
+        content: '';
+        width: 13px;
+        top: -4px;
+        left: -2px;
+        transform: rotate(-45deg);
+      }
+
+      &:after {
+        top: 4px;
+        transform: rotate(45deg);
+      }
     }
   }
 }

@@ -62,6 +62,8 @@ export const Home = React.createClass({
             'nav--back': !this.state.isHome
           })}
           onClick={this.handleToggle}>
+            <div className="nav__icon">
+            </div>
         </div>
         <Drawer active={this.state.active} onOverlayClick={this.handleToggle} className="ubDrawer">
           <div className="ubDrawer__header">
