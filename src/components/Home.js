@@ -27,6 +27,10 @@ export const Home = React.createClass({
       'isSearch': props.location.pathname === '/search',
       'isBook': props.location.pathname === '/home/book',
       'isHome': props.location.pathname === '/home'
+    }, () => {
+      if (this.state.isBook && !this.state.destinationLocation) {
+        hashHistory.push('/home');
+      }
     });
   },
 
