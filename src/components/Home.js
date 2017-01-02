@@ -51,6 +51,10 @@ export const Home = React.createClass({
     }
   },
 
+  gotoPage(route) {
+    hashHistory.push(`/${route}`);
+  },
+
   onSuggestSelect(destination) {
     this.setState({
       'destinationLocation': [destination.location.lng, destination.location.lat]
@@ -77,11 +81,11 @@ export const Home = React.createClass({
           </div>
           <div className="ubDrawer__body">
             <ul className="ubDrawer__menu">
-              <li>Payment</li>
-              <li> Your Trips</li>
-              <li>Free Rides</li>
-              <li>Help</li>
-              <li>Settings</li>
+              <li onClick={() => this.gotoPage('payment')}>Payment</li>
+              <li onClick={() => this.gotoPage('trips')}>Your Trips</li>
+              <li onClick={() => this.gotoPage('rides')}>Free Rides</li>
+              <li onClick={() => this.gotoPage('help')}>Help</li>
+              <li onClick={() => this.gotoPage('settings')}>Settings</li>
             </ul>
           </div>
           <div className="ubDrawer__footer">

@@ -63,7 +63,7 @@ export const Map = React.createClass({
       }
       latitude = center[1];
       longitude = center[0];
-      height = this.props.containerHeight / 2;  
+      height = this.props.containerHeight - 334;  
     }
 
     this.setState({

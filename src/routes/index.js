@@ -26,5 +26,11 @@ export default (
         cb(null, require('../components/Home').default);
       }, 'SearchView');
     }} />
+
+    <Route path="payment" name="payment" getComponent={(nextState, cb) => {
+      require.ensure([], (require) => {
+        cb(null, require('../components/Payment').default);
+      }, 'PaymentView');
+    }} />
   </Route>
 );
