@@ -32,5 +32,11 @@ export default (
         cb(null, require('../components/Payment').default);
       }, 'PaymentView');
     }} />
+
+    <Route path="settings" name="settings" getComponent={(nextState, cb) => {
+      require.ensure([], (require) => {
+        cb(null, require('../components/Settings').default);
+      }, 'PaymentView');
+    }} />
   </Route>
 );

@@ -1,6 +1,7 @@
 .genericView {
   background: #F9F9F9;
   height: 100%;
+  overflow: scroll;
 
   &__header {
     background: #000;
@@ -54,22 +55,51 @@
     align-items: center;
     padding-left: 20px;
     color: #000;
-    &:last-child {
-      border-bottom: 1px solid #eee;
+    &--link {
       color: #285F93;
-
       .genericList__item__name {
         margin-left: 0;
       }
     }
 
-    &__icon {
+    &:last-child {
+      border-bottom: 1px solid #eee;
+    }
+
+    img.genericList__item__name {
       height: 30px;
+    }
+
+    span.genericList__item__icon {
+      width: 30px;
+      height: 30px;
+      background: #ccc;
+      border-radius: 50%;
     }
 
     &__name {
       margin-left: 10px;
       font-size: 14px;
+      display: flex;
+      flex-direction: column;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    &--profile {
+      height: 100px;
+      .genericList__item__name {
+        height: 60px;
+      }
+      span.genericList__item__icon {
+        width: 60px;
+        height: 60px;
+      }
+    }
+
+    &--signout {
+      margin-top: 20px;
+      color: red;
     }
   }
 }

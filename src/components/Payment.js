@@ -35,7 +35,7 @@ export const Payment = React.createClass({
             <div className="genericList__item__name">Cash</div>
           </div>
 
-          <div className="genericList__item">
+          <div className="genericList__item genericList__item--last">
             <div className="genericList__item__name">Add Payment Method</div>
           </div>
         </div>
