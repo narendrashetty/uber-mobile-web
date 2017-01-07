@@ -24,7 +24,8 @@ export const Map = React.createClass({
   getInitialState() {
     return {
       'isLoading': true,
-      'viewport': {}
+      'viewport': {},
+      'pathTotalLength': 0
     };
   },
 
@@ -41,6 +42,7 @@ export const Map = React.createClass({
     let longitude = this.props.sourceLocation[0];
     let height = this.props.containerHeight;
     let width = this.props.containerWidth;
+    let pathTotalLength = this.state.pathTotalLength;
 
 
     if (this.props.destinationLocation) {
@@ -63,7 +65,8 @@ export const Map = React.createClass({
       }
       latitude = center[1];
       longitude = center[0];
-      height = this.props.containerHeight - 334;  
+      height = this.props.containerHeight - 334;
+      pathTotalLength = this.refs.svg.refs.path.getTotalLength();
     }
 
     this.setState({
@@ -72,8 +75,9 @@ export const Map = React.createClass({
         width,
         height,
         latitude,
-        longitude
+        longitude,
       },
+      pathTotalLength,
       'isLoading': false
     });
   },
@@ -93,42 +97,66 @@ export const Map = React.createClass({
 
     let d = `M ${sourcePixel[0] + 5} ${sourcePixel[1] + 5} Q ${center} ${altitude} ${destinationPixel[0] + 5} ${destinationPixel[1] + 5}`;
     return (
-      <path
-        id="arc1"
-        fill="none"
-        stroke="#446688"
-        strokeWidth="2"
-        d={d}
-      >
-      </path>
+      <svg>
+        <path
+          id="arc1"
+          fill="none"
+          stroke="#000"
+          strokeWidth="2"
+          d={d}
+          className="path2"
+        >
+        </path>
+        <path
+          id="arc1"
+          fill="none"
+          stroke="#000"
+          strokeWidth="2"
+          d={d}
+          ref="path"
+          className="path"
+          style={{
+            'strokeDasharray': this.state.pathTotalLength,
+            'strokeDashoffset': this.state.pathTotalLength
+          }}
+        >
+        </path>
+      </svg>
     );
   },
 
   renderDots(config) {
     const sourceProject = config.project(this.props.sourceLocation);
-    return (
-      <div>
-        <div className="marker" style={{
-          'top': sourceProject[1],
-          'left': sourceProject[0]
-        }}>
-          <div className="ring"></div>
-        </div>
 
-        {(() => {
-          if (this.props.destinationLocation) {
-            const destinationProject = config.project(this.props.destinationLocation);
-            return (
-              <div className="marker" style={{
-                'top': destinationProject[1],
-                'left': destinationProject[0]
-              }}>
-              </div>
-            );
-          }
-        })()}
-      </div>
-    );
+    if (this.props.destinationLocation) {
+      const destinationProject = config.project(this.props.destinationLocation);
+      return (
+        <div>
+          <div className="marker marker--dark" style={{
+            'top': sourceProject[1],
+            'left': sourceProject[0]
+          }}>
+          </div>
+
+          <div className="marker marker--dark marker--destination" style={{
+            'top': destinationProject[1],
+            'left': destinationProject[0]
+          }}>
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <div className="marker" style={{
+            'top': sourceProject[1],
+            'left': sourceProject[0]
+          }}>
+            <div className="ring"></div>
+          </div>
+        </div>
+      );
+    }
   },
 
   renderOverlay() {
@@ -163,6 +191,7 @@ export const Map = React.createClass({
                 longitude={this.state.viewport.longitude}
                 zoom={this.state.viewport.zoom}
                 isDragging={false}
+                ref="svg"
                 redraw={this.renderPath}
               />
             );
@@ -186,8 +215,13 @@ export const Map = React.createClass({
         <MapGL
           {...this.state.viewport}
           onChangeViewport={(newViewport) => {
+            let pathTotalLength = this.state.pathTotalLength;
+            if (this.props.destinationLocation) {
+              pathTotalLength = this.refs.svg.refs.path.getTotalLength();
+            }
             this.setState({
-              'viewport': Object.assign({}, this.state.viewport, newViewport)
+              'viewport': Object.assign({}, this.state.viewport, newViewport),
+              pathTotalLength
             });
           }}
         >
