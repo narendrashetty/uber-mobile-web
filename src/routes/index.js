@@ -36,7 +36,7 @@ export default (
     <Route path="settings" name="settings" getComponent={(nextState, cb) => {
       require.ensure([], (require) => {
         cb(null, require('../components/Settings').default);
-      }, 'PaymentView');
+      }, 'SettingsView');
     }} />
   </Route>
 );

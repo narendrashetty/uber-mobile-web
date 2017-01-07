@@ -90,19 +90,19 @@ export const Map = React.createClass({
     let centerY = Math.abs(sourcePixel[1] + destinationPixel[1]) / 2;
 
     if (sourcePixel[0] > destinationPixel[0] && sourcePixel[1] >= destinationPixel[1]) {
-      // centerX += (sourcePixel[0] - centerX) / 2;
+      centerX += (sourcePixel[1] - centerY);
       centerY -= (sourcePixel[1] - centerY);
     } else if (sourcePixel[0] <= destinationPixel[0] && sourcePixel[1] < destinationPixel[1]) {
-      // centerX += (destinationPixel[0] - centerX) / 2;
+      centerX += (destinationPixel[1] - centerY);
       centerY -= (destinationPixel[1] - centerY);
     }
 
 
     if (sourcePixel[0] < destinationPixel[0] && sourcePixel[1] >= destinationPixel[1]) {
-      // centerX += (sourcePixel[0] - centerX) / 2;
+      centerX += (sourcePixel[1] - centerY);
       centerY -= (sourcePixel[1] - centerY);
     } else if (sourcePixel[0] > destinationPixel[0] && sourcePixel[1] < destinationPixel[1]) {
-      // centerX += (destinationPixel[0] - centerX) / 2;
+      centerX -= (destinationPixel[1] - centerY);
       centerY -= (destinationPixel[1] - centerY);
     }
 
