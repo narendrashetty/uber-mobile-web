@@ -86,23 +86,34 @@ export const Map = React.createClass({
     const sourcePixel = config.project(this.props.sourceLocation);
     const destinationPixel = config.project(this.props.destinationLocation);
 
-    let diff = Math.abs(sourcePixel[0] - destinationPixel[0]) / 2;
-    let center = destinationPixel[0] + diff;
+    let centerX = Math.abs(sourcePixel[0] + destinationPixel[0]) / 2;
+    let centerY = Math.abs(sourcePixel[1] + destinationPixel[1]) / 2;
 
-    if (sourcePixel[0] < destinationPixel[0]) {
-      center = sourcePixel[0] + diff;
+    if (sourcePixel[0] > destinationPixel[0] && sourcePixel[1] >= destinationPixel[1]) {
+      // centerX += (sourcePixel[0] - centerX) / 2;
+      centerY -= (sourcePixel[1] - centerY);
+    } else if (sourcePixel[0] <= destinationPixel[0] && sourcePixel[1] < destinationPixel[1]) {
+      // centerX += (destinationPixel[0] - centerX) / 2;
+      centerY -= (destinationPixel[1] - centerY);
     }
 
-    let altitude = destinationPixel[1] - (this.state.viewport.zoom * 2);
 
-    let d = `M ${sourcePixel[0] + 5} ${sourcePixel[1] + 5} Q ${center} ${altitude} ${destinationPixel[0] + 5} ${destinationPixel[1] + 5}`;
+    if (sourcePixel[0] < destinationPixel[0] && sourcePixel[1] >= destinationPixel[1]) {
+      // centerX += (sourcePixel[0] - centerX) / 2;
+      centerY -= (sourcePixel[1] - centerY);
+    } else if (sourcePixel[0] > destinationPixel[0] && sourcePixel[1] < destinationPixel[1]) {
+      // centerX += (destinationPixel[0] - centerX) / 2;
+      centerY -= (destinationPixel[1] - centerY);
+    }
+
+    let d = `M ${sourcePixel[0]} ${sourcePixel[1]} Q ${centerX} ${centerY} ${destinationPixel[0]} ${destinationPixel[1]}`;
     return (
       <svg>
         <path
           id="arc1"
           fill="none"
           stroke="#000"
-          strokeWidth="2"
+          strokeWidth="3"
           d={d}
           className="path2"
         >
@@ -111,7 +122,7 @@ export const Map = React.createClass({
           id="arc1"
           fill="none"
           stroke="#000"
-          strokeWidth="2"
+          strokeWidth="3"
           d={d}
           ref="path"
           className="path"

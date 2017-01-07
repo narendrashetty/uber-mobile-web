@@ -39,6 +39,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transform: translate(-5px, -5px);
   .ring {
     width: 10px;
     height: 10px;
@@ -57,6 +58,8 @@
     background: #000;
     width: 14px;
     height: 14px;
+    transform: translate(-7px, -7px);
+    z-index: 1;
     &:after {
       content: '';
       background: #fff;
