@@ -1,6 +1,8 @@
 import React from 'react';
 import Hammer from 'react-hammerjs';
 
+import cabImg from '../images/cab.jpg';
+
 export const Book = React.createClass({
 
   getInitialState() {
@@ -42,20 +44,26 @@ export const Book = React.createClass({
             <div className="rideOptions">
 
               <div className="rideGroup fullHeight fullWidth" data-id="0">
-                <div className="ride">
-                  <div className="ride__image"></div>
+                <div className="ride ride--active">
+                  <div className="ride__image" style={{
+                    'backgroundImage': `url(${cabImg})`
+                  }}></div>
                   <p className="ride__name">uberPOOL</p>
                   <p className="ride__price">106.75</p>
                 </div>
 
                 <div className="ride">
-                  <div className="ride__image"></div>
+                  <div className="ride__image" style={{
+                    'backgroundImage': `url(${cabImg})`
+                  }}></div>
                   <p className="ride__name">uberGO</p>
                   <p className="ride__price">106.75</p>
                 </div>
 
                 <div className="ride">
-                  <div className="ride__image"></div>
+                  <div className="ride__image" style={{
+                    'backgroundImage': `url(${cabImg})`
+                  }}></div>
                   <p className="ride__name">uberX</p>
                   <p className="ride__price">106.75</p>
                 </div>
@@ -63,7 +71,9 @@ export const Book = React.createClass({
 
               <div className="rideGroup fullHeight fullWidth" data-id="1">
                 <div className="ride">
-                  <div className="ride__image"></div>
+                  <div className="ride__image" style={{
+                    'backgroundImage': `url(${cabImg})`
+                  }}></div>
                   <p className="ride__name">uberXL</p>
                   <p className="ride__price">106.75</p>
                 </div>

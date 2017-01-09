@@ -113,12 +113,21 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
+
+  &--active {
+    -webkit-filter: grayscale(0%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(0%);
+    transform: scale(1.1);
+  }
 
   &__image {
     width: 60px;
     height: 60px;
     background: #ccc;
     border-radius: 50%;
+    background-size: cover;
   }
 
   &__name {
