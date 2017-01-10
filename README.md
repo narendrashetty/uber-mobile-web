@@ -19,7 +19,7 @@ It took me a some time to build the basic implementation of the app, I have used
 
 Below is the gif of the app with basic interaction.
 
-![](blob:https://medium.com/654bd963-ef1e-49dd-bd7d-ecab86916a3d)
+![](https://media.giphy.com/media/l0MYzFypHGzNGB7MI/source.gif)
 
 Please give a visit to the demo on your mobile browser and share your inputs with me. (Since I hosted it on heroku, it’s goes down when it has no visits. Don’t lose patience if it doesn’t load at first :P).
 
