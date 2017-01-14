@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import { renderToString } from 'react-dom/server';
 import { match, RouterContext } from 'react-router';
 import expressStaticGzip from 'express-static-gzip';
+import device from 'express-device';
 
 import createMemoryHistory from 'history/lib/createMemoryHistory';
 import configureStore from './store';
@@ -26,6 +27,7 @@ server.use('/static', expressStaticGzip('./dist/static', {
   }
 }));
 
+server.use(device.capture());
 
 server.use((req, res)=> {
   match({
@@ -38,28 +40,33 @@ server.use((req, res)=> {
       res.redirect(302, redirectLocation.pathname + redirectLocation.search);
     } else if (renderProps) {
 
-      // Create a new Redux store instance
-      const store = configureStore();
+      if (req.device.type === 'phone') {
 
-      // Render the component to a string
-      const html = renderToString(
-        <Provider store={store}>
-          <RouterContext {...renderProps} />
-        </Provider>
-      );
+        // Create a new Redux store instance
+        const store = configureStore();
 
-      const preloadedState = store.getState();
+        // Render the component to a string
+        const html = renderToString(
+          <Provider store={store}>
+            <RouterContext {...renderProps} />
+          </Provider>
+        );
 
-      fs.readFile('./dist/index.html', 'utf8', function (err, file) {
-        if (err) {
-          return console.log(err);
-        }
-        let document = file.replace(/<div id="app"><\/div>/, `<div id="app">${html}</div>`);
-        document = document.replace(/'preloadedState'/, `'${JSON.stringify(preloadedState)}'`);
-        res.setHeader('Cache-Control', 'public, max-age=31536000');
-        res.setHeader("Expires", new Date(Date.now() + 2592000000).toUTCString());
-        res.send(document);
-      });
+        const preloadedState = store.getState();
+
+        fs.readFile('./dist/index.html', 'utf8', function (err, file) {
+          if (err) {
+            return console.log(err);
+          }
+          let document = file.replace(/<div id="app"><\/div>/, `<div id="app">${html}</div>`);
+          document = document.replace(/'preloadedState'/, `'${JSON.stringify(preloadedState)}'`);
+          res.setHeader('Cache-Control', 'public, max-age=31536000');
+          res.setHeader("Expires", new Date(Date.now() + 2592000000).toUTCString());
+          res.send(document);
+        });
+      } else {
+        res.send('Please use Mobile to browse, or use chrome dev tools to change the user agent');
+      }
 
     } else {
       res.status(404).send('Not found')
