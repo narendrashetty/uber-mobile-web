@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "./node_modules/.bin/webpack-dev-server --config=webpack.dev.config.js",
-    "start": "rm -rf dist && env NODE_ENV=production ./node_modules/.bin/webpack --config=webpack.prod.config.js && ./node_modules/.bin/babel-node ./src/server.js"
+    "start": "env NODE_ENV=production ./node_modules/.bin/webpack --config=webpack.prod.config.js && ./node_modules/.bin/babel-node ./src/server.js"
   },
   "keywords": [],
   "author": "",
