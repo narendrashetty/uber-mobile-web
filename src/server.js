@@ -15,6 +15,16 @@ import routes from './routes';
 const server = Express();
 const port = process.env.PORT || 3000;
 
+function ensureSecure(req, res, next) {
+  if(req.secure || req.hostname === 'localhost') {
+    return next();
+  };
+  // handle port numbers if you need non defaults
+  res.redirect('https://' + req.hostname + req.url); // express 4.x
+};
+
+server.all('*', ensureSecure); // at top of routing calls
+
 server.use('/manifest.json', Express.static('./dist/manifest.json'));
 server.use('/favicon.ico', Express.static('./dist/static/images/favicon.ico'));
 
