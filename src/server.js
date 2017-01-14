@@ -17,13 +17,7 @@ const port = process.env.PORT || 3000;
 server.use('/manifest.json', Express.static('./dist/manifest.json'));
 server.use('/favicon.ico', Express.static('./dist/static/images/favicon.ico'));
 
-server.use('/sw.js',  Express.static('./dist/sw.js', {
-  'maxAge': 31536000,
-  setHeaders: function(res, path, stat) {
-    res.setHeader("Expires", new Date(Date.now() + 2592000000).toUTCString());
-    return res;
-  }
-}));
+server.use('/sw.js',  Express.static('./dist/sw.js'));
 server.use('/static', expressStaticGzip('./dist/static', {
   'maxAge': 31536000,
   setHeaders: function(res, path, stat) {
@@ -75,49 +69,3 @@ server.use((req, res)=> {
 
 server.listen(port);
 console.log('=== Go to http://localhost:' + port + ' ===');
-
-
-
-
-
-
-// import express from 'express';
-// import fs from 'fs';
-// import path from 'path';
-// import React from 'react';
-// import { renderToString } from 'react-dom/server';
-// import createRoutes from './routes';
-// import configureStore from './store';
-// import { Provider } from 'react-redux';
-
-// const store = configureStore();
-
-
-// function handleRender(req, res) {
-//   const html = renderToString(
-//     <Provider store={store}>
-//       { createRoutes() }
-//     </Provider>
-//   );
-
-//   const preloadedState = store.getState()
-
-
-//   fs.readFile('../dist/index.html', 'utf8', function (err, file) {
-//     if (err) {
-//     return console.log(err);
-//     }
-
-
-//     const document = file.replace(/<div id="app"><\/div>/, `<div id="app">${html}</div>`);
-//     res.send(document);
-//   });
-// }
-
-// const app = express();
-// // Serve built files with express static files middleware
-// app.use('/', express.static(path.join(__dirname, '../dist')));
-// // Serve normal requests with our handleRender function
-// app.get('*', handleRender);
-// app.listen(3000);
-// console.log('=== Go to http://localhost:3000 ===');

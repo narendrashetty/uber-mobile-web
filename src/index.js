@@ -4,8 +4,6 @@ import icon144 from './images/144.png';
 import icon192 from './images/192.png';
 import favicon from './images/favicon.ico';
 
-require("babel-polyfill");
-
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';

@@ -5,6 +5,7 @@ import HTMLOverlay from 'react-map-gl/dist/overlays/html.react.js';
 import SVGOverlay from 'react-map-gl/dist/overlays/svg.react.js';
 import Dimensions from 'react-dimensions';
 import ViewportMercator from 'viewport-mercator-project';
+import ObjectAssign from 'object-assign';
 
 const CONFIG = {
   'mapStyle': 'mapbox://styles/mapbox/basic-v9',
@@ -231,7 +232,7 @@ export const Map = React.createClass({
               pathTotalLength = this.refs.svg.refs.path.getTotalLength();
             }
             this.setState({
-              'viewport': Object.assign({}, this.state.viewport, newViewport),
+              'viewport': ObjectAssign({}, this.state.viewport, newViewport),
               pathTotalLength
             });
           }}

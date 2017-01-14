@@ -19,10 +19,8 @@ module.exports = {
       'react-redux',
       'redux',
       'react-router',
-      'redux-thunk'
-    ],
-    'polyfills': [
-      'babel-polyfill'
+      'redux-thunk',
+      'object-assign'
     ]
   },
   'module': {
@@ -66,7 +64,7 @@ module.exports = {
   },
   'plugins': [
     new webpack.optimize.CommonsChunkPlugin({
-      name: ['vendor', 'polyfills'],
+      name: ['vendor'],
       minChunks: Infinity,
       filename: 'static/js/[name].[hash].js',
     }),
