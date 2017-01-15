@@ -30,7 +30,7 @@ server.use('/static', expressStaticGzip('./dist/static', {
 /* At the top, with other redirect methods before other routes */
 server.get('*',function(req,res,next){
   if(req.headers['x-forwarded-proto']!='https')
-    res.redirect('https://mypreferreddomain.com'+req.url);
+    res.redirect('https://' + req.hostname + req.url);
   else
     next(); /* Continue to other routes if we're not redirecting */
 });
