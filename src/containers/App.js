@@ -24,18 +24,27 @@ export const App = React.createClass({
 
   componentDidMount() {
     if (isBrowser) {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((pos) => {
-          this.setState({
-            'sourceLocation': [pos.coords.longitude, pos.coords.latitude],
-            'isSplash': false
-          }, () => {
-            if (this.props.location.pathname === '/') {
-              hashHistory.push('/home');
-            }
-          });
-        });
-      }
+      // if (navigator.geolocation) {
+      //   navigator.geolocation.getCurrentPosition((pos) => {
+      //     console.log(pos.coords.longitude, pos.coords.latitude);
+      //     this.setState({
+      //       'sourceLocation': [pos.coords.longitude, pos.coords.latitude],
+      //       'isSplash': false
+      //     }, () => {
+      //       if (this.props.location.pathname === '/') {
+      //         hashHistory.push('/home');
+      //       }
+      //     });
+      //   });
+      // }
+      this.setState({
+        'sourceLocation': [4.8684373, 52.3748217],
+        'isSplash': false
+      }, () => {
+        if (this.props.location.pathname === '/') {
+          hashHistory.push('/home');
+        }
+      });
     }
 
     window.addEventListener('online', () => {
