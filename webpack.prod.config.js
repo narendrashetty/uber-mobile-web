@@ -52,8 +52,8 @@ module.exports = {
   'output': {
     'path': path.resolve(__dirname, './dist'),
     'publicPath': '/',
-    'filename': 'static/js/[name].[hash].js',
-    'chunkFilename': 'static/js/[name].[hash].js'
+    'filename': 'static/js/[name].[chunkhash].js',
+    'chunkFilename': 'static/js/[name].[chunkhash].js'
   },
   'devServer': {
     'contentBase': './dist',
@@ -63,7 +63,7 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin({
       name: ['vendor'],
       minChunks: Infinity,
-      filename: 'static/js/[name].[hash].js',
+      filename: 'static/js/[name].[chunkhash].js',
     }),
 
     new HtmlWebpackPlugin({
