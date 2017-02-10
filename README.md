@@ -1,6 +1,7 @@
 # Uber clone for mobile web
 
 Live Demo: [https://uberweb.herokuapp.com](https://uberweb.herokuapp.com)
+
 Blog: [https://medium.com/@narendrashetty/how-i-built-a-super-fast-uber-clone-for-mobile-web-863680d2100f]
 
 This is about my learning on performance techniques used to make Uber
