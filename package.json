@@ -5,13 +5,21 @@
   "main": "./src/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "./node_modules/.bin/webpack-dev-server --config=webpack.dev.config.js",
-    "start": "env NODE_ENV=production ./node_modules/.bin/webpack --config=webpack.prod.config.js && ./node_modules/.bin/babel-node ./src/server.js"
+    "dev": "webpack-dev-server --config=webpack.dev.config.js",
+    "prestart": "npm run clean",
+    "start": "env NODE_ENV=production webpack --config=webpack.prod.config.js && babel-node ./src/server.js",
+    "clean": "rm -rf dist",
+    "prebuild": "npm run clean",
+    "build": "webpack --config=webpack.prod.config.js",
+    "predeploy": "npm run build",
+    "deploy": "surge -p ./dist -d uber-mobile-web.surge.sh"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {},
+  "devDependencies": {
+    "surge": "^0.18.0"
+  },
   "babel": {
     "presets": [
       "es2015",
