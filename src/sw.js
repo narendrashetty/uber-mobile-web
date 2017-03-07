@@ -1,6 +1,6 @@
 import toolbox from 'sw-toolbox';
 
-const VERSION = 'v3';
+const VERSION = 'v4';
 
 const {
   assets,
