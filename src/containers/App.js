@@ -37,14 +37,6 @@ export const App = React.createClass({
           });
         });
       }
-      // this.setState({
-      //   'sourceLocation': [4.8684373, 52.3748217],
-      //   'isSplash': false
-      // }, () => {
-      //   if (this.props.location.pathname === '/') {
-      //     hashHistory.push('/home');
-      //   }
-      // });
     }
 
     window.addEventListener('online', () => {
