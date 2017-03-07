@@ -26,7 +26,6 @@ export const App = React.createClass({
     if (isBrowser) {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((pos) => {
-          console.log(pos.coords.longitude, pos.coords.latitude);
           this.setState({
             'sourceLocation': [pos.coords.longitude, pos.coords.latitude],
             'isSplash': false
