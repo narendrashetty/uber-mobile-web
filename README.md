@@ -1,6 +1,6 @@
 # Uber clone for mobile web
 
-Live Demo: [https://uberweb.herokuapp.com](https://uberweb.herokuapp.com)
+Live Demo: [https://uberweb.herokuapp.com](http://uber-mobile-web.surge.sh/)
 
 Blog: [https://medium.com/@narendrashetty/how-i-built-a-super-fast-uber-clone-for-mobile-web-863680d2100f]
 
@@ -22,7 +22,5 @@ It took me a some time to build the basic implementation of the app, I have used
 Below is the gif of the app with basic interaction.
 
 ![](mock.gif?raw=true)
-
-Please give a visit to the demo on your mobile browser and share your inputs with me. (Since I hosted it on heroku, it’s goes down when it has no visits. Don’t lose patience if it doesn’t load at first :P).
 
 Maintaining Performance is like a chess, one wrong move and it undos lot of hardwork done.
